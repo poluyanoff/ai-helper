@@ -1,0 +1,147 @@
+/* ============================================================
+   СЛОТ — Design tokens, three directions
+   Each variant overrides the shared token contract used by .lp
+   ============================================================ */
+
+/* ============================================================
+   A · STUDIO LIGHT  —  cool light, electric cobalt
+   "Modern product SaaS." Confident, clean, trustworthy.
+   ============================================================ */
+.v-studio {
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Onest", sans-serif;
+  --font-hand: "Caveat", cursive;
+  --h1-weight: 700; --h1-ls: -0.03em; --h1-lh: 1.03;
+
+  --bg: #f4f6f9;
+  --fg: #0c0f17;
+  --sub-fg: #565d6e;
+
+  --accent: #2b54ff;
+  --accent-hover: #1d40d8;
+  --accent-fg: #ffffff;
+  --accent-soft: rgba(43,84,255,0.10);
+
+  --nav-bg: rgba(255,255,255,0.78);
+  --nav-border: rgba(15,18,28,0.07);
+  --nav-shadow: 0 10px 34px -16px rgba(20,28,60,0.30);
+  --nav-link: #4a5161;
+
+  --mark-bg: linear-gradient(150deg,#3a63ff,#1f3ed6);
+  --mark-shadow: 0 6px 16px -4px rgba(43,84,255,0.55);
+
+  --btn-shadow: 0 10px 24px -10px rgba(43,84,255,0.6);
+  --ghost-bg: #ffffff; --ghost-bg-hover: #f2f4f8; --ghost-border: rgba(15,18,28,0.12);
+
+  --eyebrow-bg: #ffffff; --eyebrow-fg: #344; --eyebrow-border: rgba(15,18,28,0.10);
+  --eyebrow-fg: #2b3344;
+
+  --note-bg: #ffffff; --note-border: rgba(15,18,28,0.08);
+
+  --chat-bg: #ffffff;
+  --chat-border: rgba(15,18,28,0.08);
+  --chat-shadow: 0 40px 80px -36px rgba(23,33,71,0.40), 0 8px 24px -12px rgba(23,33,71,0.18);
+  --chat-bar-bg: #fbfcfe; --chat-divider: rgba(15,18,28,0.07);
+  --dot: #d6dae3;
+  --track: #e8ebf1;
+  --agent-bg: #f1f3f7;
+  --slot-bg: #f4f6f9; --slot-border: rgba(15,18,28,0.10);
+  --chip-bg: #ffffff; --chip-border: rgba(15,18,28,0.10);
+
+  --annot: #2b54ff;
+}
+
+/* ============================================================
+   B · MIDNIGHT  —  deep navy→violet gradient, luminous glow
+   "Premium high-tech." Dramatic, centered, confident.
+   ============================================================ */
+.v-midnight {
+  --font-display: "Manrope", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-hand: "Caveat", cursive;
+  --h1-weight: 800; --h1-ls: -0.035em; --h1-lh: 1.02;
+
+  --bg: #07091a;
+  --fg: #eef1ff;
+  --sub-fg: #9aa1c9;
+
+  --accent: #5d7dff;
+  --accent-hover: #738fff;
+  --accent-fg: #ffffff;
+  --accent-soft: rgba(93,125,255,0.16);
+
+  --nav-bg: rgba(255,255,255,0.05);
+  --nav-border: rgba(255,255,255,0.10);
+  --nav-shadow: 0 10px 40px -18px rgba(0,0,0,0.7);
+  --nav-link: #b9bfe3;
+
+  --mark-bg: linear-gradient(150deg,#6e8bff,#3b4fe0);
+  --mark-shadow: 0 6px 20px -4px rgba(93,125,255,0.7);
+
+  --btn-shadow: 0 14px 34px -12px rgba(93,125,255,0.75);
+  --ghost-bg: rgba(255,255,255,0.06); --ghost-bg-hover: rgba(255,255,255,0.12); --ghost-border: rgba(255,255,255,0.16);
+
+  --eyebrow-bg: rgba(255,255,255,0.06); --eyebrow-fg: #cdd3f5; --eyebrow-border: rgba(255,255,255,0.14);
+
+  --note-bg: rgba(255,255,255,0.04); --note-border: rgba(255,255,255,0.10);
+
+  --chat-bg: rgba(18,22,48,0.72);
+  --chat-border: rgba(255,255,255,0.12);
+  --chat-shadow: 0 50px 110px -40px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  --chat-bar-bg: rgba(255,255,255,0.04); --chat-divider: rgba(255,255,255,0.09);
+  --dot: rgba(255,255,255,0.28);
+  --track: rgba(255,255,255,0.12);
+  --agent-bg: rgba(255,255,255,0.07);
+  --slot-bg: rgba(255,255,255,0.07); --slot-border: rgba(255,255,255,0.14);
+  --chip-bg: rgba(255,255,255,0.05); --chip-border: rgba(255,255,255,0.12);
+
+  --annot: #8ea0ff;
+}
+
+/* ============================================================
+   C · WARM CONCIERGE  —  evolved cream, clay accent, serif H1
+   "Brand-evolved." Warm, editorial-meets-product, premium spa.
+   ============================================================ */
+.v-warm {
+  --font-display: "Lora", serif;
+  --font-body: "Onest", sans-serif;
+  --font-hand: "Caveat", cursive;
+  --h1-weight: 600; --h1-ls: -0.015em; --h1-lh: 1.06;
+
+  --bg: #f3ede4;
+  --fg: #211b16;
+  --sub-fg: #7c7062;
+
+  --accent: #bb5638;
+  --accent-hover: #a3472c;
+  --accent-fg: #fdf8f2;
+  --accent-soft: rgba(187,86,56,0.12);
+
+  --nav-bg: rgba(253,250,245,0.80);
+  --nav-border: rgba(33,27,22,0.08);
+  --nav-shadow: 0 12px 34px -18px rgba(80,52,32,0.35);
+  --nav-link: #6c6053;
+
+  --mark-bg: linear-gradient(150deg,#c5633f,#a3472c);
+  --mark-shadow: 0 6px 16px -4px rgba(187,86,56,0.5);
+
+  --btn-shadow: 0 12px 26px -12px rgba(187,86,56,0.6);
+  --ghost-bg: #fdfaf5; --ghost-bg-hover: #f6f0e7; --ghost-border: rgba(33,27,22,0.12);
+
+  --eyebrow-bg: #fdfaf5; --eyebrow-fg: #4d4338; --eyebrow-border: rgba(33,27,22,0.10);
+
+  --note-bg: #fdfaf5; --note-border: rgba(33,27,22,0.08);
+
+  --chat-bg: #fdfaf5;
+  --chat-border: rgba(33,27,22,0.08);
+  --chat-shadow: 0 40px 80px -36px rgba(80,52,32,0.40), 0 8px 24px -12px rgba(80,52,32,0.16);
+  --chat-bar-bg: #f8f2e9; --chat-divider: rgba(33,27,22,0.07);
+  --dot: #ddd2c2;
+  --track: #e7ddce;
+  --agent-bg: #f1eadd;
+  --slot-bg: #f6f0e7; --slot-border: rgba(33,27,22,0.10);
+  --chip-bg: #fdfaf5; --chip-border: rgba(33,27,22,0.10);
+
+  --brand-ls: 0.01em;
+  --annot: #bb5638;
+}

@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ-агент для сетей салонов красоты — вариант Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     Минимальный сброс и базовая сетка
+     ============================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Вариант Editorial: тёплый ivory, графит, латунный акцент */
+    --bg: #faf7f1;
+    --fg: #1c1a17;
+    --fg-muted: #7a736a;
+    --border: #e6e0d5;
+    --accent: #9a7b4f;
+
+    --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --container: 1400px;
+    --gutter: 32px;
+  }
+
+  /* — правки характера под Editorial — */
+  .hero__h1, .nav__logo { letter-spacing: -0.01em; }
+  .hero__h1 { font-weight: 600; font-size: clamp(44px, 5vw, 76px); }
+  .btn { border-radius: 2px; }
+  .btn--primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ============================================
+     NAV
+     ============================================ */
+  .nav {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+  }
+  .nav__logo {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    font-size: 26px;
+  }
+  .nav__links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    margin-right: auto;
+    margin-left: 48px;
+  }
+  .nav__links a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .nav__cta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .nav__cta a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid var(--fg);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .btn--primary {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    padding: 120px 0 160px;
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .hero__h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(38px, 4.4vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin-bottom: 48px;
+  }
+  .hero__sub {
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--fg);
+    margin-bottom: 24px;
+    max-width: 540px;
+  }
+  .hero__bullets {
+    list-style: none;
+    margin-bottom: 40px;
+    max-width: 540px;
+  }
+  .hero__bullets li {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .hero__bullets li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--fg-muted);
+  }
+  .hero__cta {
+    display: flex;
+    gap: 12px;
+  }
+  .hero__note {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    max-width: 480px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+  }
+  .hero__note strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* Демо-чат */
+  .demo-chat {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    font-size: 14px;
+  }
+  .demo-chat__tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .demo-chat__tab {
+    flex: 1;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .demo-chat__tab-track {
+    height: 3px;
+    border-radius: 999px;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .demo-chat__tab-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--fg);
+    border-radius: 999px;
+  }
+  .demo-chat__tab-label {
+    font-size: 12px;
+    color: var(--fg-muted);
+    text-align: left;
+    transition: color 0.2s ease;
+  }
+  .demo-chat__tab--active .demo-chat__tab-label {
+    color: var(--fg);
+  }
+  .demo-chat__messages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 380px;
+  }
+  .demo-chat__pane { display: none; }
+  .demo-chat__pane--active { display: flex; flex-direction: column; gap: 12px; }
+  .msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    line-height: 1.4;
+  }
+  .msg--client {
+    align-self: flex-end;
+    background: #0a0a0a;
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+  }
+  .msg--agent {
+    align-self: flex-start;
+    background: rgba(10, 10, 10, 0.06);
+    color: var(--fg);
+    border-bottom-left-radius: 4px;
+  }
+  .msg__label {
+    font-size: 11px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .msg__slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .msg__slot {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    font-size: 12px;
+    color: var(--fg-muted);
+    background: transparent;
+  }
+
+  /* ============================================
+     PROBLEMS
+     ============================================ */
+  .problems {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .problems__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 100px;
+  }
+  .problems__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .problem-card {
+    background: var(--bg);
+    padding: 56px 40px;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+  .problem-card__eyebrow {
+    font-size: 13px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 24px;
+  }
+  .problem-card__stat {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .problem-card__stat-label {
+    font-size: 16px;
+    color: var(--fg-muted);
+    line-height: 1.45;
+    max-width: 320px;
+  }
+
+  /* ============================================
+     WHY US
+     ============================================ */
+  .why {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .why__header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .why__eyebrow {
+    font-size: 13px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+  }
+  .why__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .why__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .why-card {
+    background: rgba(10, 10, 10, 0.035);
+    border-radius: 16px;
+    padding: 36px 36px 40px;
+  }
+  .why-card__title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .why-card__icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.12);
+    flex-shrink: 0;
+  }
+  .why-card__text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+  .why-card__list {
+    list-style: none;
+    margin-top: 4px;
+  }
+  .why-card__list li {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .why-card__list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--fg-muted);
+  }
+  .why-card__list li:last-child { margin-bottom: 0; }
+
+  /* ============================================
+     AUDIT DETAILED
+     ============================================ */
+  .audit {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .audit__grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .audit__eyebrow {
+    font-size: 13px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 24px;
+  }
+  .audit__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 32px;
+  }
+  .audit__intro {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    margin-bottom: 36px;
+    max-width: 540px;
+  }
+  .audit__meta {
+    display: flex;
+    gap: 20px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    max-width: 540px;
+  }
+  .audit__meta-item { flex: 0 0 auto; min-width: 160px; }
+  .audit__meta-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-muted);
+    margin-bottom: 8px;
+  }
+  .audit__meta-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .audit__questions-label {
+    font-size: 13px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 28px;
+  }
+  .audit__questions { list-style: none; }
+  .audit__questions li {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--fg);
+  }
+  .audit__questions li:first-child {
+    border-top: 1px solid var(--border);
+  }
+  .audit__questions li:last-child {
+    border-bottom: none;
+  }
+
+  /* ============================================
+     STEPS 1-2-3
+     ============================================ */
+  .steps {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .steps__header {
+    margin-bottom: 80px;
+    max-width: 760px;
+  }
+  .steps__eyebrow {
+    font-size: 13px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+  }
+  .steps__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .steps__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .step {
+    background: var(--bg);
+    padding: 48px 36px 56px;
+    display: flex;
+    flex-direction: column;
+    min-height: 340px;
+  }
+  .step__num {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(56px, 6vw, 88px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    color: var(--fg);
+  }
+  .step__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(24px, 2.2vw, 30px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    color: var(--fg);
+  }
+  .step__text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+
+  /* ============================================
+     QUALITY (два текстовых блока)
+     ============================================ */
+  .quality {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .quality__header {
+    text-align: left;
+    margin-bottom: 100px;
+  }
+  .quality__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    max-width: 880px;
+  }
+  .quality__grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .quality__divider {
+    background: var(--border);
+    width: 1px;
+    align-self: stretch;
+  }
+  .quality__item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.12);
+    margin-bottom: 28px;
+  }
+  .quality__item-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(28px, 2.8vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+    color: var(--fg);
+  }
+  .quality__item-text {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+  .quality__item-text mark {
+    background: rgba(10, 10, 10, 0.08);
+    color: var(--fg);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+  /* ============================================
+     FEATURES (scroll-stacking)
+     ============================================ */
+  .features {
+    border-top: 1px solid var(--border);
+  }
+  .features__header {
+    padding: 140px 0 80px;
+  }
+  .features__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    max-width: 760px;
+  }
+  /* Высокая зона прокрутки: по экрану на каждую функцию */
+  .features__scroll {
+    position: relative;
+    height: 300vh;
+  }
+  .features__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .features__viewport {
+    width: 100%;
+  }
+  .feature__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  /* Левая колонка — стек карточек */
+  .feature__stack {
+    position: relative;
+    min-height: 320px;
+  }
+  .feature__card {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: var(--bg);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease;
+  }
+  /* Карточка ещё не дошла — ждёт снизу */
+  .feature__card--next {
+    transform: translateY(40px);
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Активная карточка */
+  .feature__card--active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  /* Карточка уже ушла вверх — «стэкнулась» */
+  .feature__card--done {
+    transform: translateY(-32px);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .feature__num {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--fg-muted);
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+  }
+  .feature__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(28px, 3vw, 40px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .feature__text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--fg-muted);
+    max-width: 460px;
+  }
+  .feature__tag {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--fg);
+    align-self: flex-start;
+  }
+  /* Правая колонка — стек чатов */
+  .feature__media {
+    position: relative;
+    min-height: 460px;
+  }
+  .feature__chat {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .feature__chat--next {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    pointer-events: none;
+  }
+  .feature__chat--active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .feature__chat--done {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.98);
+    pointer-events: none;
+  }
+  .feature__chat .demo-chat {
+    max-width: 460px;
+    width: 100%;
+  }
+  .feature__chat .demo-chat__messages {
+    min-height: 0;
+  }
+  /* Прогресс-индикатор слева */
+  .features__progress {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .features__progress-dot {
+    width: 28px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--border);
+    transition: background 0.3s ease;
+  }
+  .features__progress-dot--active {
+    background: var(--fg);
+  }
+
+  /* ============================================
+     ADVANTAGES
+     ============================================ */
+  .adv {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .adv__header {
+    margin-bottom: 64px;
+    max-width: 760px;
+  }
+  .adv__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .adv__intro {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    max-width: 520px;
+  }
+  /* Коллаж */
+  .adv__collage {
+    position: relative;
+    background: rgba(10, 10, 10, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 56px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .adv__side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  /* Центральный чат */
+  .adv__chat {
+    width: 320px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(10, 10, 10, 0.10);
+  }
+  .adv__chat-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .adv__chat-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.12);
+  }
+  .adv__chat-body {
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  /* Карточки-спутники */
+  .adv-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .adv-card__label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-bottom: 12px;
+  }
+  .adv-card__channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .adv-card__channel {
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--fg-muted);
+  }
+  .adv-card__channel--active {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .adv-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    padding: 7px 0;
+  }
+  .adv-card__row + .adv-card__row {
+    border-top: 1px solid var(--border);
+  }
+  .adv-card__row-key { color: var(--fg-muted); }
+  .adv-card__row-val { color: var(--fg); font-weight: 500; }
+  .adv-card__rule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--fg-muted);
+    padding: 6px 0;
+  }
+  .adv-card__rule-mark {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  /* Текст преимуществ под коллажем */
+  .adv__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .adv-item {
+    background: var(--bg);
+    padding: 44px 32px 48px;
+  }
+  .adv-item__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 28px);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .adv-item__text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+
+  /* ============================================
+     CALCULATOR
+     ============================================ */
+  .calc {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .calc__header {
+    margin-bottom: 64px;
+    max-width: 760px;
+  }
+  .calc__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .calc__intro {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    max-width: 560px;
+  }
+  .calc__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .calc__panel {
+    background: var(--bg);
+    padding: 44px 40px;
+  }
+  .calc__panel:first-child {
+    border-radius: 16px 0 0 16px;
+  }
+  .calc__panel:last-child {
+    border-radius: 0 16px 16px 0;
+  }
+  .calc__panel-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-muted);
+    margin-bottom: 32px;
+  }
+  .calc-field {
+    margin-bottom: 28px;
+  }
+  .calc-field:last-child { margin-bottom: 0; }
+  .calc-field__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    gap: 16px;
+  }
+  .calc-field__label {
+    font-size: 16px;
+    color: var(--fg);
+  }
+  .calc-field__value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .calc-field input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    outline: none;
+    cursor: pointer;
+  }
+  .calc-field input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--fg);
+    cursor: pointer;
+  }
+  .calc-field input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--fg);
+    cursor: pointer;
+  }
+  .calc__result-block {
+    margin-bottom: 36px;
+  }
+  .calc__result-block:last-of-type { margin-bottom: 0; }
+  .calc__result-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-muted);
+    margin-bottom: 20px;
+  }
+  .calc__line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+  }
+  .calc__line:first-of-type { border-top: 1px solid var(--border); }
+  .calc__line-label {
+    font-size: 15px;
+    color: var(--fg-muted);
+    line-height: 1.4;
+  }
+  .calc__tip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--fg-muted);
+    cursor: help;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .calc__tip-text {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    background: var(--fg);
+    color: var(--bg);
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .calc__tip-text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: var(--fg);
+  }
+  .calc__tip:hover .calc__tip-text {
+    opacity: 1;
+    visibility: visible;
+  }
+  .calc__line-value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .calc__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 28px;
+    margin-top: 8px;
+    gap: 16px;
+  }
+  .calc__total-label {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.2vw, 28px);
+    letter-spacing: -0.015em;
+    color: var(--fg);
+  }
+  .calc__total-value {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 52px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .calc__total--year .calc__total-label,
+  .calc__total--year .calc__total-value {
+    color: var(--fg-muted);
+  }
+  .calc__total--year {
+    padding-top: 8px;
+  }
+  .calc__total--year .calc__total-value {
+    font-size: clamp(20px, 2.2vw, 28px);
+  }
+
+  /* ============================================
+     OBJECTIONS (аккордеон)
+     ============================================ */
+  .objections {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .objections__header {
+    margin-bottom: 80px;
+    max-width: 760px;
+  }
+  .objections__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .objections__list {
+    border-top: 1px solid var(--border);
+  }
+  .objection {
+    border-bottom: 1px solid var(--border);
+  }
+  .objection__summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 32px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+  }
+  .objection__summary::-webkit-details-marker { display: none; }
+  .objection__icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background 0.2s ease;
+    position: relative;
+  }
+  .objection__icon::before,
+  .objection__icon::after {
+    content: "";
+    position: absolute;
+    background: var(--fg);
+    transition: transform 0.2s ease;
+  }
+  .objection__icon::before {
+    width: 12px;
+    height: 1px;
+  }
+  .objection__icon::after {
+    width: 1px;
+    height: 12px;
+  }
+  .objection[open] .objection__icon::after {
+    transform: rotate(90deg);
+  }
+  .objection__body {
+    padding: 0 0 36px;
+    max-width: 820px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--fg-muted);
+  }
+
+  /* ============================================
+     FAQ
+     ============================================ */
+  .faq {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .faq__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .faq__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .faq__intro {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    max-width: 380px;
+  }
+  .faq__list {
+    border-top: 1px solid var(--border);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item__summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 24px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--fg);
+  }
+  .faq-item__summary::-webkit-details-marker { display: none; }
+  .faq-item__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .faq-item__icon::before,
+  .faq-item__icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: var(--fg-muted);
+    transition: transform 0.2s ease;
+  }
+  .faq-item__icon::before {
+    width: 12px;
+    height: 1px;
+    transform: translate(-50%, -50%);
+  }
+  .faq-item__icon::after {
+    width: 1px;
+    height: 12px;
+    transform: translate(-50%, -50%);
+  }
+  .faq-item[open] .faq-item__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .faq-item__body {
+    padding: 0 0 24px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    max-width: 640px;
+  }
+
+  /* ============================================
+     PRICING
+     ============================================ */
+  .pricing {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+  .pricing__header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .pricing__h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .pricing__sub {
+    font-size: 17px;
+    color: var(--fg-muted);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .pricing__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 60px;
+  }
+  .plan {
+    background: rgba(10, 10, 10, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  .plan--featured {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .plan__badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--bg);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+  }
+  .plan__name {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-muted);
+    margin-bottom: 16px;
+  }
+  .plan--featured .plan__name { color: rgba(255, 255, 255, 0.7); }
+  .plan__price {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 3.6vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .plan__price-sub {
+    font-size: 14px;
+    color: var(--fg-muted);
+    margin-bottom: 28px;
+  }
+  .plan--featured .plan__price-sub { color: rgba(255, 255, 255, 0.7); }
+  .plan__features {
+    list-style: none;
+    margin-bottom: 32px;
+    flex-grow: 1;
+  }
+  .plan__features li {
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+    color: var(--fg);
+  }
+  .plan--featured .plan__features li {
+    color: var(--bg);
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+  }
+  .plan__features li:last-child { border-bottom: none; }
+  .plan__cta {
+    display: inline-block;
+    padding: 14px 24px;
+    border: 1px solid var(--fg);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+  }
+  .plan--featured .plan__cta {
+    background: var(--bg);
+    color: var(--fg);
+    border-color: var(--bg);
+  }
+  .pricing__trial {
+    border-top: 1px solid var(--border);
+    padding-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .pricing__trial-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .pricing__trial-text {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    margin-bottom: 28px;
+  }
+  .pricing__trial-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 980px) {
+    .hero__grid { grid-template-columns: 1fr; gap: 60px; }
+    .problems__grid { grid-template-columns: 1fr; }
+    .why__grid { grid-template-columns: 1fr; }
+    .audit__grid { grid-template-columns: 1fr; gap: 60px; }
+    .steps__grid { grid-template-columns: 1fr; }
+    .feature__grid { grid-template-columns: 1fr; gap: 48px; }
+    /* Мобайл: отключаем scroll-stacking, обычный поток */
+    .features__scroll { height: auto; }
+    .features__sticky { position: static; height: auto; display: block; overflow: visible; }
+    .feature__stack { min-height: 0; }
+    .feature__card {
+      position: static;
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
+      margin-bottom: 56px;
+    }
+    .feature__card:last-child { margin-bottom: 0; }
+    .features__progress { display: none; }
+    .feature__media { min-height: 0; margin-top: 32px; }
+    .feature__chat {
+      position: static;
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
+      margin-bottom: 32px;
+    }
+    .feature__chat:last-child { margin-bottom: 0; }
+    .adv__collage { grid-template-columns: 1fr; justify-items: center; }
+    .adv__grid { grid-template-columns: 1fr; }
+    .quality__grid { grid-template-columns: 1fr; gap: 60px; }
+    .quality__divider { display: none; }
+    .calc__grid { grid-template-columns: 1fr; }
+    .calc__panel:first-child { border-radius: 16px 16px 0 0; }
+    .calc__panel:last-child { border-radius: 0 0 16px 16px; }
+    .faq__grid { grid-template-columns: 1fr; gap: 40px; }
+    .pricing__grid { grid-template-columns: 1fr; }
+    .pricing__trial { grid-template-columns: 1fr; gap: 32px; }
+    .nav__links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav__inner">
+    <div class="nav__logo">Слот</div>
+    <ul class="nav__links">
+      <li><a href="#">Продукт</a></li>
+      <li><a href="#">Как работает</a></li>
+      <li><a href="#">Тарифы</a></li>
+      <li><a href="#">Кейсы</a></li>
+    </ul>
+    <div class="nav__cta">
+      <a href="#" class="btn">Попробовать бесплатно</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero__grid">
+
+      <div class="hero__copy">
+        <h1 class="hero__h1">
+          Ваш администратор больше не пропускает заявки
+        </h1>
+
+        <p class="hero__sub">
+          ИИ-агент, который знает ваши услуги, сам записывает клиентов и&nbsp;делает продажи.
+        </p>
+
+        <ul class="hero__bullets">
+          <li>Омниканально — в Telegram, Max и на сайте</li>
+          <li>Без галлюцинаций, по согласованным сценариям</li>
+          <li>Без обучения нового сотрудника каждые полгода</li>
+        </ul>
+
+        <div class="hero__cta">
+          <a href="#" class="btn btn--primary">Запросить демо</a>
+          <a href="#" class="btn">Попробовать бесплатно</a>
+        </div>
+
+        <div class="hero__note">
+          Перед запуском проводим <strong>бесплатный аудит</strong> ваших диалогов — покажем точки роста и слабые места, даже если вы решите не работать с нами дальше.
+        </div>
+      </div>
+
+      <!-- Демо-чат -->
+      <div class="demo-chat">
+        <div class="demo-chat__tabs">
+          <button class="demo-chat__tab demo-chat__tab--active" data-tab="record">
+            <span class="demo-chat__tab-track"><span class="demo-chat__tab-fill"></span></span>
+            <span class="demo-chat__tab-label">Запись</span>
+          </button>
+          <button class="demo-chat__tab" data-tab="consult">
+            <span class="demo-chat__tab-track"><span class="demo-chat__tab-fill"></span></span>
+            <span class="demo-chat__tab-label">Консультация</span>
+          </button>
+          <button class="demo-chat__tab" data-tab="sale">
+            <span class="demo-chat__tab-track"><span class="demo-chat__tab-fill"></span></span>
+            <span class="demo-chat__tab-label">Продажа сертификата</span>
+          </button>
+        </div>
+
+        <!-- Сценарий: Запись -->
+        <div class="demo-chat__pane demo-chat__pane--active" data-pane="record">
+          <div class="msg msg--client">
+            Хочу записаться на маникюр в субботу
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Конечно! У нас три филиала. В какой удобнее: Тверская, Арбат или Сокол?
+          </div>
+          <div class="msg msg--client">
+            Тверская
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            На субботу есть свободные слоты:
+            <div class="msg__slots">
+              <span class="msg__slot">11:00 — Анна</span>
+              <span class="msg__slot">14:30 — Мария</span>
+              <span class="msg__slot">17:00 — Анна</span>
+            </div>
+          </div>
+          <div class="msg msg--client">
+            14:30
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Записала вас к Марии на субботу 14:30. Прислала подтверждение и напомню за день. До встречи!
+          </div>
+        </div>
+
+        <!-- Сценарий: Консультация -->
+        <div class="demo-chat__pane" data-pane="consult">
+          <div class="msg msg--client">
+            Подскажите, чем отличается классический массаж от лимфодренажного?
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Классический массаж работает с мышцами — снимает напряжение и зажимы. Лимфодренажный — мягкий, ускоряет отток жидкости и помогает при отёках.
+          </div>
+          <div class="msg msg--client">
+            А мне после долгого перелёта какой лучше?
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            После перелёта обычно рекомендуют лимфодренажный — он хорошо снимает отёки ног и общую тяжесть. Длительность 60 или 90 минут, стоимость от 3 800 ₽.
+          </div>
+          <div class="msg msg--client">
+            Понятно, давайте запишусь
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Отлично. На какой день удобно посмотреть свободное время?
+          </div>
+        </div>
+
+        <!-- Сценарий: Продажа сертификата -->
+        <div class="demo-chat__pane" data-pane="sale">
+          <div class="msg msg--client">
+            Хочу подарить подруге сертификат на день рождения. Что посоветуете?
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Хорошая идея! У нас сертификаты на любую сумму или на конкретные программы. Подскажите, какой бюджет рассматриваете?
+          </div>
+          <div class="msg msg--client">
+            Тысяч 5–7
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            В этот бюджет хорошо заходят:
+            <div class="msg__slots">
+              <span class="msg__slot">SPA-программа — 5 500 ₽</span>
+              <span class="msg__slot">Уход за лицом — 6 200 ₽</span>
+              <span class="msg__slot">Номинал 7 000 ₽</span>
+            </div>
+          </div>
+          <div class="msg msg--client">
+            Возьму SPA-программу
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Отлично. Пришлю ссылку на оплату — после неё сертификат уйдёт вам на email в красивом макете. Кому оформляем: вам или сразу подруге?
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems">
+  <div class="container">
+    <h2 class="problems__h2">Где вы теряете прямо сейчас</h2>
+
+    <div class="problems__grid">
+
+      <!-- Карточка 1 -->
+      <div class="problem-card">
+        <div>
+          <div class="problem-card__eyebrow">Деньги</div>
+          <div class="problem-card__stat">180&nbsp;000&nbsp;₽</div>
+          <div class="problem-card__stat-label">
+            Средняя стоимость найма и обучения одного администратора
+          </div>
+        </div>
+      </div>
+
+      <!-- Карточка 2 -->
+      <div class="problem-card">
+        <div>
+          <div class="problem-card__eyebrow">Клиенты</div>
+          <div class="problem-card__stat">37%</div>
+          <div class="problem-card__stat-label">
+            Входящих сообщений остаются без ответа в часы пик
+          </div>
+        </div>
+      </div>
+
+      <!-- Карточка 3 -->
+      <div class="problem-card">
+        <div>
+          <div class="problem-card__eyebrow">Время</div>
+          <div class="problem-card__stat">22 ч</div>
+          <div class="problem-card__stat-label">
+            В неделю администратор тратит на типовые вопросы: цены, адрес, парковка, режим работы
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT DETAILED -->
+<section class="audit">
+  <div class="container">
+    <div class="audit__grid">
+
+      <div class="audit__left">
+        <h2 class="audit__h2">Изучим ваш бизнес и&nbsp;найдём точки роста</h2>
+        <p class="audit__intro">
+          Мы не запускаем агента вслепую. До любых внедрений берём 5–10 реальных диалогов ваших администраторов и разбираем их по полочкам. На выходе — отчёт, который вы получаете независимо от того, продолжим мы работу или нет.
+        </p>
+
+        <div class="audit__meta">
+          <div class="audit__meta-item">
+            <div class="audit__meta-label">Срок</div>
+            <div class="audit__meta-value">5–7 дней</div>
+          </div>
+          <div class="audit__meta-item">
+            <div class="audit__meta-label">Стоимость</div>
+            <div class="audit__meta-value">Бесплатно</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="audit__right">
+        <div class="audit__questions-label">На какие вопросы ответит аудит</div>
+        <ul class="audit__questions">
+          <li>На каких вопросах администраторы теряют клиентов чаще всего</li>
+          <li>Какие услуги недопродаются из-за слабых ответов в переписке</li>
+          <li>Сколько заявок остаётся без ответа дольше 10 минут и в какое время</li>
+          <li>Где сценарии записи ломаются — на филиале, мастере, времени или цене</li>
+          <li>Какие возражения повторяются и как сейчас на них отвечают</li>
+          <li>Что говорят клиенты, которые решают не записываться</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <div class="features__header">
+      <h2 class="features__h2">Что агент берёт на себя</h2>
+    </div>
+  </div>
+
+  <div class="features__scroll" id="features-scroll">
+    <div class="features__sticky">
+      <div class="features__viewport">
+        <div class="container">
+          <div class="feature__grid">
+
+            <!-- Левая колонка: стек текстовых карточек -->
+            <div class="feature__stack">
+              <div class="features__progress">
+                <span class="features__progress-dot features__progress-dot--active"></span>
+                <span class="features__progress-dot"></span>
+                <span class="features__progress-dot"></span>
+              </div>
+
+              <div class="feature__card feature__card--active" data-card="0">
+                <div class="feature__num">01</div>
+                <div class="feature__title">Расскажет об услугах</div>
+                <p class="feature__text">
+                  Знает прайс, состав процедур, противопоказания, мастеров и расписание. Отвечает так, как ответил бы лучший администратор сети.
+                </p>
+              </div>
+
+              <div class="feature__card feature__card--next" data-card="1">
+                <div class="feature__num">02</div>
+                <div class="feature__title">Запишет к специалисту</div>
+                <p class="feature__text">
+                  Подберёт слот, согласует время, оформит запись в вашей системе. Перенесёт и отменит, если нужно.
+                </p>
+                <span class="feature__tag">Интеграция с YCLIENTS</span>
+              </div>
+
+              <div class="feature__card feature__card--next" data-card="2">
+                <div class="feature__num">03</div>
+                <div class="feature__title">Продаст подарочный сертификат</div>
+                <p class="feature__text">
+                  Доведёт клиента до оплаты: предложит номинал, оформит сертификат и пришлёт его покупателю или сразу получателю.
+                </p>
+              </div>
+            </div>
+
+            <!-- Правая колонка: стек чатов -->
+            <div class="feature__media">
+
+              <div class="feature__chat feature__chat--active" data-chat="0">
+                <div class="demo-chat">
+                  <div class="demo-chat__messages">
+                    <div class="msg msg--client">
+                      Подскажите, чем отличается классический массаж от лимфодренажного?
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      Классический массаж работает с мышцами — снимает напряжение и зажимы. Лимфодренажный — мягкий, ускоряет отток жидкости и помогает при отёках.
+                    </div>
+                    <div class="msg msg--client">
+                      А мне после долгого перелёта какой лучше?
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      После перелёта обычно рекомендуют лимфодренажный — он хорошо снимает отёки ног и общую тяжесть. Длительность 60 или 90 минут, стоимость от 3 800 ₽.
+                    </div>
+                    <div class="msg msg--client">
+                      Понятно, давайте запишусь
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      Отлично. На какой день удобно посмотреть свободное время?
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="feature__chat feature__chat--next" data-chat="1">
+                <div class="demo-chat">
+                  <div class="demo-chat__messages">
+                    <div class="msg msg--client">
+                      Хочу записаться на маникюр в субботу
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      Конечно! У нас три филиала. В какой удобнее: Тверская, Арбат или Сокол?
+                    </div>
+                    <div class="msg msg--client">
+                      Тверская
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      На субботу есть свободные слоты:
+                      <div class="msg__slots">
+                        <span class="msg__slot">11:00 — Анна</span>
+                        <span class="msg__slot">14:30 — Мария</span>
+                        <span class="msg__slot">17:00 — Анна</span>
+                      </div>
+                    </div>
+                    <div class="msg msg--client">
+                      14:30
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      Записала вас к Марии на субботу 14:30. Прислала подтверждение и напомню за день. До встречи!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="feature__chat feature__chat--next" data-chat="2">
+                <div class="demo-chat">
+                  <div class="demo-chat__messages">
+                    <div class="msg msg--client">
+                      Хочу подарить подруге сертификат на день рождения. Что посоветуете?
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      Хорошая идея! У нас сертификаты на любую сумму или на конкретные программы. Подскажите, какой бюджет рассматриваете?
+                    </div>
+                    <div class="msg msg--client">
+                      Тысяч 5–7
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      В этот бюджет хорошо заходят:
+                      <div class="msg__slots">
+                        <span class="msg__slot">SPA-программа — 5 500 ₽</span>
+                        <span class="msg__slot">Уход за лицом — 6 200 ₽</span>
+                        <span class="msg__slot">Номинал 7 000 ₽</span>
+                      </div>
+                    </div>
+                    <div class="msg msg--client">
+                      Возьму SPA-программу
+                    </div>
+                    <div class="msg msg--agent">
+                      <div class="msg__label">Агент</div>
+                      Отлично. Пришлю ссылку на оплату — после неё сертификат уйдёт вам на email в красивом макете. Кому оформляем: вам или сразу подруге?
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="adv">
+  <div class="container">
+    <div class="adv__header">
+      <h2 class="adv__h2">Готов к работе из коробки</h2>
+      <p class="adv__intro">
+        Мы не продаём конструктор, в котором вам предстоит разбираться. Агент приходит уже настроенным под вашу сеть.
+      </p>
+    </div>
+
+    <div class="adv__collage">
+
+      <!-- Левая колонка карточек -->
+      <div class="adv__side">
+        <div class="adv-card">
+          <div class="adv-card__label">Канал обращения</div>
+          <div class="adv-card__channels">
+            <span class="adv-card__channel adv-card__channel--active">Telegram</span>
+            <span class="adv-card__channel">Max</span>
+            <span class="adv-card__channel">Avito</span>
+            <span class="adv-card__channel">ВКонтакте</span>
+            <span class="adv-card__channel">Сайт</span>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-card__label">Карточка клиента · CRM</div>
+          <div class="adv-card__row">
+            <span class="adv-card__row-key">Имя</span>
+            <span class="adv-card__row-val">Ольга К.</span>
+          </div>
+          <div class="adv-card__row">
+            <span class="adv-card__row-key">Последний визит</span>
+            <span class="adv-card__row-val">Маникюр, 3 нед. назад</span>
+          </div>
+          <div class="adv-card__row">
+            <span class="adv-card__row-key">Филиал</span>
+            <span class="adv-card__row-val">Тверская</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Центральный чат -->
+      <div class="adv__chat">
+        <div class="adv__chat-head">
+          <span class="adv__chat-avatar"></span>
+          Агент
+        </div>
+        <div class="adv__chat-body">
+          <div class="msg msg--client">
+            Здравствуйте! Хочу повторить маникюр, как в прошлый раз
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Здравствуйте, Ольга! В прошлый раз вы были у нас на Тверской. Записать туда же?
+          </div>
+          <div class="msg msg--client">
+            Да, давайте
+          </div>
+          <div class="msg msg--agent">
+            <div class="msg__label">Агент</div>
+            Подобрала ближайшие слоты на Тверской — посмотрите, что удобно.
+          </div>
+        </div>
+      </div>
+
+      <!-- Правая колонка карточек -->
+      <div class="adv__side">
+        <div class="adv-card">
+          <div class="adv-card__label">Tone of voice</div>
+          <div class="adv-card__row">
+            <span class="adv-card__row-key">Стиль</span>
+            <span class="adv-card__row-val">Премиальный</span>
+          </div>
+          <div class="adv-card__row">
+            <span class="adv-card__row-key">Обращение</span>
+            <span class="adv-card__row-val">На «вы», тепло</span>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-card__label">Защита от выдумок</div>
+          <div class="adv-card__rule">
+            <span class="adv-card__rule-mark"></span>
+            Не называет цену вне прайса
+          </div>
+          <div class="adv-card__rule">
+            <span class="adv-card__rule-mark"></span>
+            Не обещает скидки
+          </div>
+          <div class="adv-card__rule">
+            <span class="adv-card__rule-mark"></span>
+            Не назначает несуществующие процедуры
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="adv__grid">
+
+      <div class="adv-item">
+        <div class="adv-item__title">Работает омниканально</div>
+        <p class="adv-item__text">
+          Telegram, Max, Avito, ВКонтакте, виджет на сайте, отдельная страница-чат. Один агент, одна база знаний, единые сценарии.
+        </p>
+      </div>
+
+      <div class="adv-item">
+        <div class="adv-item__title">Говорит вашим тоном</div>
+        <p class="adv-item__text">
+          Настройка tone of voice под бренд: премиальный салон и сеть эконом-сегмента говорят по-разному. Мы заранее настраиваем это.
+        </p>
+      </div>
+
+      <div class="adv-item">
+        <div class="adv-item__title">Без галлюцинаций</div>
+        <p class="adv-item__text">
+          Работает строго по согласованным сценариям. Не выдумает цену, не пообещает скидку, не назначит процедуру, которой у вас нет.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STEPS 1-2-3 -->
+<section class="steps">
+  <div class="container">
+    <div class="steps__header">
+      <h2 class="steps__h2">Запустим за 4 недели и&nbsp;останемся рядом</h2>
+    </div>
+
+    <div class="steps__grid">
+
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__title">Аудит и база знаний</div>
+        <p class="step__text">
+          Подключаемся к вашим каналам, слушаем записи, собираем материалы по услугам, прайсу и процессам. На выходе — структурированная база знаний сети, на которой будет работать агент.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__title">Сценарии и тон</div>
+        <p class="step__text">
+          Прописываем сценарии записи, продажи сертификата, ответов на возражения. Подбираем ToV под бренд — премиальный салон и сеть эконом-сегмента говорят по-разному. Согласуем формулировки с вами.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step__num">03</div>
+        <div class="step__title">Обучение и тестирование</div>
+        <p class="step__text">
+          Тестируем агента сначала локально на синтетических диалогах, затем — на реальных запросах клиентов. Передаём в автономный режим только после того, как вы убедитесь в качестве.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step__num">04</div>
+        <div class="step__title">Запуск и развитие</div>
+        <p class="step__text">
+          Подключаем каналы, мониторим первые недели. Дальше регулярно анализируем чаты: где агент теряет клиента, где можно дожать продажу, какие сценарии добавить. Обновляем под новые услуги и акции без доплат.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc">
+  <div class="container">
+    <div class="calc__header">
+      <h2 class="calc__h2">Посчитайте эффект для вашей сети</h2>
+      <p class="calc__intro">
+        Подвигайте ползунки под параметры вашего бизнеса — расчёт обновится сразу. Это оценка по средним показателям индустрии; точные цифры по вашей сети дадим после аудита.
+      </p>
+    </div>
+
+    <div class="calc__grid">
+
+      <div class="calc__panel">
+        <div class="calc__panel-label">Параметры сети</div>
+
+        <div class="calc-field">
+          <div class="calc-field__row">
+            <span class="calc-field__label">Заведений в сети</span>
+            <span class="calc-field__value" id="v-salons">3</span>
+          </div>
+          <input type="range" id="r-salons" min="1" max="30" step="1" value="3">
+        </div>
+
+        <div class="calc-field">
+          <div class="calc-field__row">
+            <span class="calc-field__label">Администраторов всего</span>
+            <span class="calc-field__value" id="v-admins">4</span>
+          </div>
+          <input type="range" id="r-admins" min="1" max="60" step="1" value="4">
+        </div>
+
+        <div class="calc-field">
+          <div class="calc-field__row">
+            <span class="calc-field__label">Зарплата администратора</span>
+            <span class="calc-field__value" id="v-salary">50 000 ₽</span>
+          </div>
+          <input type="range" id="r-salary" min="30000" max="120000" step="5000" value="50000">
+        </div>
+
+        <div class="calc-field">
+          <div class="calc-field__row">
+            <span class="calc-field__label">Средний чек</span>
+            <span class="calc-field__value" id="v-check">2 500 ₽</span>
+          </div>
+          <input type="range" id="r-check" min="500" max="15000" step="500" value="2500">
+        </div>
+
+        <div class="calc-field">
+          <div class="calc-field__row">
+            <span class="calc-field__label">Визитов в месяц на всю сеть</span>
+            <span class="calc-field__value" id="v-visits">600</span>
+          </div>
+          <input type="range" id="r-visits" min="50" max="5000" step="50" value="600">
+        </div>
+      </div>
+
+      <div class="calc__panel">
+        <div class="calc__result-block">
+          <div class="calc__result-label">Экономия на операционке</div>
+          <div class="calc__line">
+            <span class="calc__line-label">Высвобождение времени на переписку<span class="calc__tip">?<span class="calc__tip-text">Экономия учитывает только долю рабочего времени администратора, которая уходит на текстовые каналы — сам администратор остаётся в зале. По оценке индустрии это около 30% его рабочего времени.</span></span></span>
+            <span class="calc__line-value" id="v-fot">60 000 ₽</span>
+          </div>
+        </div>
+
+        <div class="calc__result-block">
+          <div class="calc__result-label">Дополнительный доход</div>
+          <div class="calc__line">
+            <span class="calc__line-label">Возврат на повторные визиты</span>
+            <span class="calc__line-value" id="v-repeat">120 000 ₽</span>
+          </div>
+          <div class="calc__line">
+            <span class="calc__line-label">Заявки во внеурочное время 24/7</span>
+            <span class="calc__line-value" id="v-night">75 000 ₽</span>
+          </div>
+        </div>
+
+        <div class="calc__total">
+          <span class="calc__total-label">Эффект в месяц</span>
+          <span class="calc__total-value" id="v-month">255 000 ₽</span>
+        </div>
+        <div class="calc__total calc__total--year">
+          <span class="calc__total-label">Эффект в год</span>
+          <span class="calc__total-value" id="v-year">3 060 000 ₽</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="quality">
+  <div class="container">
+    <div class="quality__header">
+      <h2 class="quality__h2">Почему гарантируем результат</h2>
+    </div>
+
+    <div class="quality__grid">
+
+      <div class="quality__item">
+        <div class="quality__item-title">Контроль поведения</div>
+        <p class="quality__item-text">
+          Агент не выдумывает и не галлюцинирует — его поведение <mark>строго подчинено регламентам</mark>, которые мы прописываем с вами на этапе подготовки. В сложных и нестандартных ситуациях агент сам передаёт диалог администратору или собственнику.
+        </p>
+      </div>
+
+      <div class="quality__divider"></div>
+
+      <div class="quality__item">
+        <div class="quality__item-title">Команда</div>
+        <p class="quality__item-text">
+          За продуктом стоят <mark>лид-специалисты из крупных российских бигтехов</mark> — те, кто строил рекомендательные системы, поисковые сервисы и продуктовые ИИ-команды. Архитектура, тестирование и контроль качества — на уровне enterprise.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="faq__grid">
+
+      <div class="faq__left">
+        <h2 class="faq__h2">Частые вопросы</h2>
+        <p class="faq__intro">
+          Если не нашли свой — напишите нам или задайте его прямо на демо.
+        </p>
+      </div>
+
+      <div class="faq__list">
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>А он не заменит моих администраторов?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Нет. Горячие, нестандартные и эмоциональные обращения агент сам переводит на живого сотрудника. Мы не вытесняем команду — мы снимаем с неё рутину, чтобы администраторы занимались тем, ради чего вы их нанимали: работой с клиентом в зале и допродажами.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>А если он напишет ерунду?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Агент работает строго по согласованной базе знаний и сценариям. За её пределами он не выдумывает: говорит «уточню у администратора» и передаёт диалог. Цены, скидки, медицинские утверждения захардкожены и не могут быть нарушены.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>А первые недели не страшно его отпускать?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Не отпускаете. До перехода в автономный режим вы видите, как агент отвечает, и можете править формулировки. Автономным он становится только там, где вы сами не находите, что исправлять.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>А персональные данные?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Работаем в соответствии с 152-ФЗ. Данные клиентов хранятся на российских серверах, передача шифруется, доступ ограничен. По запросу предоставляем полный пакет документов для вашего DPO.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>За сколько вы запускаетесь?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            От подписания до первого автономного ответа — 2–4 недели в зависимости от размера сети и количества услуг. Аудит и тестирование занимают большую часть этого времени.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>Что вы от нас хотите для старта?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Доступ к записям диалогов администраторов для аудита, материалы по услугам и прайсу, утверждение финальных сценариев. Дальше работаем мы.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>А если у нас уже стоит Jivo, Smartbot или другой бот?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Чаще всего меняем без боли — заберём то, что вы туда уже занесли, добьём аудитом и перезапустим. Параллельная работа на тестовом канале — тоже возможна.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>Моей CRM нет в вашем списке</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            У нас несколько нативных интеграций. Если вашей нет, но у неё есть открытый API — подключим за 5–10 дней без доплаты на годовом контракте. Если API нет — агент будет отправлять администратору готовую карточку клиента для ручного заведения.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>В каких каналах работает агент?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Telegram, Max, виджет на сайте, отдельная страница-чат по ссылке. По WhatsApp — уточняйте у менеджера: подключаем по запросу.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>Можно посмотреть, как он работает у других?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Да, на демо покажем живые диалоги (с согласия клиентов) и расскажем кейсы по сегментам — премиум-сети, эконом и отдельные wellness-направления.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__summary">
+            <span>А если я хочу что-то изменить после запуска?</span>
+            <span class="faq-item__icon"></span>
+          </summary>
+          <div class="faq-item__body">
+            Любые правки в сценарии и базе знаний — без доплат на любом тарифе. Это часть сопровождения, а не «ещё одни консультационные часы».
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="container">
+    <div class="pricing__header">
+      <h2 class="pricing__h2">Готовы попробовать?</h2>
+      <p class="pricing__sub">Один тариф для старта, два — для растущей сети. Без скрытых платежей и без оплаты за интеграции.</p>
+    </div>
+
+    <div class="pricing__grid">
+
+      <div class="plan">
+        <div class="plan__name">Старт</div>
+        <div class="plan__price">990 ₽<span style="font-size: 0.5em; color: var(--fg-muted);"> / мес</span></div>
+        <div class="plan__price-sub">Для одного салона</div>
+        <ul class="plan__features">
+          <li>1 салон, до [N] сообщений в месяц</li>
+          <li>Все каналы: Telegram, Max, сайт</li>
+          <li>Базовые сценарии: запись, FAQ, прайс</li>
+          <li>Интеграция с одной CRM</li>
+          <li>Email-поддержка</li>
+        </ul>
+        <a href="#" class="plan__cta">Попробовать бесплатно</a>
+      </div>
+
+      <div class="plan plan--featured">
+        <span class="plan__badge">Рекомендуем</span>
+        <div class="plan__name">Сеть</div>
+        <div class="plan__price">[N] ₽<span style="font-size: 0.5em; color: rgba(255,255,255,0.7);"> / мес</span></div>
+        <div class="plan__price-sub">Для растущей сети</div>
+        <ul class="plan__features">
+          <li>До [N] салонов</li>
+          <li>Безлимит сообщений</li>
+          <li>Кастомные сценарии: сертификаты, допродажи, возврат «спящих»</li>
+          <li>Аудит процессов и записей</li>
+          <li>Адаптация ToV под бренд</li>
+          <li>Приоритетная поддержка</li>
+        </ul>
+        <a href="#" class="plan__cta">Запросить демо</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan__name">Enterprise</div>
+        <div class="plan__price">Индивидуально</div>
+        <div class="plan__price-sub">Для крупных сетей</div>
+        <ul class="plan__features">
+          <li>Неограниченная сеть</li>
+          <li>Кастомные интеграции</li>
+          <li>Выделенный менеджер</li>
+          <li>SLA и расширенный мониторинг</li>
+          <li>Кастомные доработки агента</li>
+        </ul>
+        <a href="#" class="plan__cta">Связаться с нами</a>
+      </div>
+
+    </div>
+
+    <div class="pricing__trial">
+      <div class="pricing__trial-title">
+        Аудит — до оплаты
+      </div>
+      <div>
+        <p class="pricing__trial-text">
+          Первые [N] дней — бесплатно. Аудит проводим до подписания: если после него вы решите не работать с нами, отчёт по слабым местам ваших диалогов остаётся у вас.
+        </p>
+        <div class="pricing__trial-cta">
+          <a href="#" class="btn btn--primary">Запросить демо</a>
+          <a href="#" class="btn">Получить аудит</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Демо-чат в hero: сторис с автопереключением
+  (function () {
+    const STORY_MS = 6000;
+    const tabs = Array.from(document.querySelectorAll('.demo-chat__tab'));
+    const panes = Array.from(document.querySelectorAll('.demo-chat__pane'));
+    if (!tabs.length) return;
+
+    let current = 0;
+    let timer = null;
+
+    function show(index) {
+      current = index;
+      tabs.forEach((t, i) => {
+        t.classList.toggle('demo-chat__tab--active', i === index);
+        const fill = t.querySelector('.demo-chat__tab-fill');
+        fill.style.transition = 'none';
+        fill.style.width = i < index ? '100%' : '0%';
+      });
+      panes.forEach((p, i) => p.classList.toggle('demo-chat__pane--active', i === index));
+
+      const activeFill = tabs[index].querySelector('.demo-chat__tab-fill');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          activeFill.style.transition = `width ${STORY_MS}ms linear`;
+          activeFill.style.width = '100%';
+        });
+      });
+    }
+
+    function next() {
+      show((current + 1) % tabs.length);
+    }
+
+    function start() {
+      clearInterval(timer);
+      timer = setInterval(next, STORY_MS);
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        show(i);
+        start();
+      });
+    });
+
+    show(0);
+    start();
+  })();
+
+  // Секция функций: scroll-stacking
+  (function () {
+    const scroll = document.getElementById('features-scroll');
+    if (!scroll) return;
+    const cards = Array.from(document.querySelectorAll('.feature__card'));
+    const chats = Array.from(document.querySelectorAll('.feature__chat'));
+    const dots = Array.from(document.querySelectorAll('.features__progress-dot'));
+    const total = cards.length;
+    let raf = null;
+
+    function setState(el, list, state) {
+      list.forEach(s => el.classList.remove(s));
+      el.classList.add(state);
+    }
+
+    function update() {
+      raf = null;
+      const rect = scroll.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // прогресс 0..1 по всей высокой зоне
+      const scrollable = scroll.offsetHeight - vh;
+      let progress = (-rect.top) / scrollable;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // активный индекс по зоне
+      let active = Math.floor(progress * total);
+      if (active >= total) active = total - 1;
+
+      cards.forEach((card, i) => {
+        if (i < active) setState(card, ['feature__card--next','feature__card--active','feature__card--done'], 'feature__card--done');
+        else if (i === active) setState(card, ['feature__card--next','feature__card--active','feature__card--done'], 'feature__card--active');
+        else setState(card, ['feature__card--next','feature__card--active','feature__card--done'], 'feature__card--next');
+      });
+      chats.forEach((chat, i) => {
+        if (i < active) setState(chat, ['feature__chat--next','feature__chat--active','feature__chat--done'], 'feature__chat--done');
+        else if (i === active) setState(chat, ['feature__chat--next','feature__chat--active','feature__chat--done'], 'feature__chat--active');
+        else setState(chat, ['feature__chat--next','feature__chat--active','feature__chat--done'], 'feature__chat--next');
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('features__progress-dot--active', i === active);
+      });
+    }
+
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+
+  // Калькулятор эффекта
+  (function () {
+    const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
+
+    // Допущения модели
+    const TEXT_SHARE = 0.30;    // доля времени администратора на текстовые каналы
+    const REPEAT_SHARE = 0.40;  // доля повторных визитов в общем потоке
+    const REPEAT_UPLIFT = 0.20; // прирост повторных визитов за счёт агента
+    const NIGHT_UPLIFT = 0.05;  // прирост заявок за счёт работы 24/7
+
+    const els = {
+      salons: document.getElementById('r-salons'),
+      admins: document.getElementById('r-admins'),
+      salary: document.getElementById('r-salary'),
+      check: document.getElementById('r-check'),
+      visits: document.getElementById('r-visits'),
+    };
+
+    function recalc() {
+      const salons = +els.salons.value;
+      const admins = +els.admins.value;
+      const salary = +els.salary.value;
+      const check = +els.check.value;
+      const visits = +els.visits.value;
+
+      const fot = admins * salary * TEXT_SHARE;
+      const repeat = visits * REPEAT_SHARE * REPEAT_UPLIFT * check;
+      const night = visits * NIGHT_UPLIFT * check;
+      const month = fot + repeat + night;
+      const year = month * 12;
+
+      document.getElementById('v-salons').textContent = salons;
+      document.getElementById('v-admins').textContent = admins;
+      document.getElementById('v-salary').textContent = salary.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('v-check').textContent = check.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('v-visits').textContent = visits.toLocaleString('ru-RU');
+
+      document.getElementById('v-fot').textContent = fmt(fot);
+      document.getElementById('v-repeat').textContent = fmt(repeat);
+      document.getElementById('v-night').textContent = fmt(night);
+      document.getElementById('v-month').textContent = fmt(month);
+      document.getElementById('v-year').textContent = fmt(year);
+    }
+
+    Object.values(els).forEach(el => el.addEventListener('input', recalc));
+    recalc();
+  })();
+</script>
+
+</body>
+</html>
