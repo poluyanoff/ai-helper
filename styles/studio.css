@@ -58,22 +58,37 @@ body {
 
 /* faint hero grid backdrop */
 .lp-gridbg {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background-image:
-    linear-gradient(rgba(20, 30, 70, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 30, 70, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(20, 30, 70, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 30, 70, 0.06) 1px, transparent 1px);
   background-size: 58px 58px;
   -webkit-mask-image: radial-gradient(ellipse 78% 68% at 50% 24%, #000 28%, transparent 76%);
           mask-image: radial-gradient(ellipse 78% 68% at 50% 24%, #000 28%, transparent 76%);
 }
 
+/* hero gradient wash — smooth vertical fade + slowly breathing glow (cobalt tones) */
+.lp-hero__aurora {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+  background: linear-gradient(180deg, #ffffff 0%, #eef3fe 26%, #d6e2fb 62%, #bcd0f7 100%);
+}
+
+/* inline channel icons in hero subtitle */
+.lp-sub__channels { display: inline-flex; align-items: center; gap: 7px; vertical-align: middle; margin-left: 5px; }
+.lp-sub__ch { display: inline-grid; place-items: center; width: 21px; height: 21px; color: var(--accent); }
+.lp-sub__ch svg { display: block; width: 19px; height: 19px; }
+
+/* hero story-switcher tabs moved into copy column */
+.lp-chat-tabs-mount { width: 100%; max-width: 460px; }
+
 /* ============================================================
    NAV — floating pill
    ============================================================ */
 .lp-nav {
-  position: relative; z-index: 5;
+  position: absolute; top: 22px; left: 0; right: 0; z-index: 20;
+  margin-inline: auto; width: calc(100% - 44px); max-width: 1080px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  margin: 22px auto 0; max-width: 1080px;
   padding: 11px 12px 11px 22px;
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(15, 18, 28, 0.07);
@@ -83,10 +98,9 @@ body {
 }
 .lp-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
 .lp-brand__mark {
-  width: 34px; height: 34px; border-radius: 10px; flex: none;
+  width: 34px; height: 34px; border-radius: 50%; flex: none;
   display: grid; place-items: center;
-  background: var(--fg);
-  box-shadow: 0 6px 16px -4px rgba(12, 15, 23, 0.45);
+  background: var(--accent);
 }
 .lp-brand__mark svg { display: block; }
 .lp-brand__name {
@@ -104,6 +118,12 @@ body {
 }
 .lp-nav__links a:hover { color: var(--fg); }
 .lp-nav__cta { display: flex; align-items: center; gap: 8px; }
+.lp-sub__audit { text-decoration: none; border-bottom: 1px solid rgba(43, 84, 255, 0.4); transition: border-color .15s ease; }
+.lp-sub__audit:hover { border-bottom-color: #2b54ff; }
+.lp-audit { scroll-margin-top: 104px; }
+@media (min-width: 981px) {
+  .lp-nav { position: fixed; }
+}
 
 /* ============================================================
    BUTTONS
@@ -120,7 +140,6 @@ body {
 .lp-btn svg { flex: none; }
 .lp-btn--primary {
   background: var(--accent); color: var(--accent-fg);
-  box-shadow: 0 10px 24px -10px rgba(43, 84, 255, 0.6);
 }
 .lp-btn--primary:hover { background: var(--accent-hover); }
 .lp-btn--ghost {
@@ -132,7 +151,7 @@ body {
 /* ============================================================
    HERO
    ============================================================ */
-.lp-hero { position: relative; overflow: hidden; isolation: isolate; }
+.lp-hero { position: relative; overflow: hidden; isolation: isolate; padding-top: 104px; }
 .lp-hero__grid {
   position: relative; z-index: 2;
   display: grid; grid-template-columns: 1.02fr 0.98fr;
@@ -148,6 +167,20 @@ body {
 .lp-sub {
   font-size: 20px; line-height: 1.5; color: var(--sub-fg);
   font-weight: 450; letter-spacing: -0.01em; max-width: 490px;
+}
+.lp-rotate { position: relative; display: inline-block; }
+.lp-rotate__sizer { visibility: hidden; }
+.lp-rotate__word {
+  position: absolute; left: 0; top: 0; white-space: nowrap;
+  color: inherit;
+  opacity: 0; transform: translate3d(0, 0.5em, 0);
+  transition: opacity .5s cubic-bezier(.2, .7, .2, 1), transform .5s cubic-bezier(.2, .7, .2, 1);
+  will-change: transform, opacity;
+}
+.lp-rotate__word.is-active { opacity: 1; transform: translate3d(0, 0, 0); }
+.lp-rotate__word.is-out { opacity: 0; transform: translate3d(0, -0.5em, 0); }
+@media (prefers-reduced-motion: reduce) {
+  .lp-rotate__word { transition: none; }
 }
 .lp-channels { display: flex; flex-direction: column; gap: 11px; }
 .lp-channels__label {
@@ -187,7 +220,7 @@ body {
    ============================================================ */
 .lp-chat {
   position: relative;
-  display: flex; flex-direction: column; gap: 16px;
+  display: flex; flex-direction: column; gap: 14px;
 }
 .lp-chat__tabs { display: flex; gap: 8px; }
 .lp-chat__tab {
@@ -215,15 +248,125 @@ body {
 .lp-chat__tab.is-active { border-color: var(--accent-line); }
 .lp-chat__tab.is-active .lp-chat__tab-label { color: var(--fg); }
 
+/* compact scenario switcher fitted into the chat header */
+.lp-chat__id { flex: none; }
+.lp-chat__switch {
+  margin-left: auto; flex: 0 1 auto; min-width: 0;
+  display: flex; gap: 3px;
+  padding: 3px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5); border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lp-chat__switch .lp-chat__tab {
+  flex: 0 1 auto; border: none; box-shadow: none; background: transparent;
+  border-radius: 999px; padding: 6px 10px;
+}
+.lp-chat__switch .lp-chat__tab.is-active {
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+.lp-chat__switch .lp-chat__fill { background: var(--accent-soft); }
+.lp-chat__switch .lp-chat__tab-label {
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+.lp-chat__switch .lp-chat__tab.is-active .lp-chat__tab-label { color: var(--accent); }
+
+.lp-chat__window {
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.42) 38%,
+    rgba(255, 255, 255, 0.22) 72%,
+    rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop), inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.lp-chat__head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 12px; border-bottom: 1px solid var(--line);
+}
+.lp-chat__avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; background: var(--accent);
+}
+.lp-chat__avatar svg { display: block; width: 18px; height: 18px; }
+.lp-chat__avatar--salon {
+  background: linear-gradient(140deg, #2b54ff, #8a5cff);
+  font-family: var(--font-display); font-weight: 600; font-size: 16px;
+  color: #fff; letter-spacing: 0;
+}
+.lp-chat__id { display: flex; flex-direction: column; gap: 2px; line-height: 1.15; }
+.lp-chat__name {
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  letter-spacing: -0.01em; color: var(--fg);
+}
+.lp-chat__status {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--faint-fg); letter-spacing: -0.01em;
+}
+.lp-chat__dot {
+  width: 7px; height: 7px; border-radius: 50%; flex: none;
+  background: #28c840;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lp-chat__dot { animation: lpChatPulse 2.4s ease-in-out infinite; }
+}
+@keyframes lpChatPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.45); }
+  50% { box-shadow: 0 0 0 5px rgba(40, 200, 64, 0); }
+}
+.lp-chat__channel {
+  margin-left: auto; flex: none;
+  display: grid; place-items: center; color: var(--faint-fg);
+}
+.lp-chat__channel svg { display: block; width: 19px; height: 19px; }
 .lp-chat__body {
   position: relative; padding: 0; min-height: 230px;
   height: 372px; overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-pop);
   transition: height .42s cubic-bezier(.4, 0, .2, 1);
 }
+.lp-chat__input {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px; border-top: none;
+}
+.lp-chat__attach {
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.1); color: var(--fg); cursor: pointer;
+  display: grid; place-items: center;
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  transition: background .15s ease, transform .12s ease;
+}
+.lp-chat__attach:hover { background: rgba(255, 255, 255, 0.22); }
+.lp-chat__attach:active { transform: scale(.94); }
+.lp-chat__attach svg { display: block; }
+.lp-chat__input-field {
+  flex: 1; font-size: 14px; color: var(--fg);
+  letter-spacing: -0.01em; padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+}
+.lp-chat__send {
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.1); color: var(--fg); cursor: pointer;
+  display: grid; place-items: center;
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  transition: background .15s ease, transform .12s ease;
+}
+.lp-chat__send:hover { background: rgba(255, 255, 255, 0.22); }
+.lp-chat__send:active { transform: scale(.94); }
+.lp-chat__send svg { display: block; }
 .lp-cta-block { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .lp-pane {
   display: flex; flex-direction: column; gap: 11px;
@@ -237,17 +380,44 @@ body {
   opacity: 1; visibility: visible; pointer-events: auto; transform: none;
 }
 .lp-msg { max-width: 84%; padding: 10px 13px; border-radius: 14px; font-size: 14.5px; line-height: 1.45; }
-.lp-msg--client { align-self: flex-end; background: #f1f3f7; color: var(--fg); border-bottom-right-radius: 5px; }
-.lp-msg--agent { align-self: flex-start; background: transparent; color: var(--fg); border: 1px solid var(--line-strong); border-bottom-left-radius: 5px; }
+.lp-msg--client { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 5px; }
+.lp-msg--agent { align-self: flex-start; background: #f1f3f7; color: var(--fg); border-bottom-left-radius: 5px; }
 .lp-msg__label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint-fg); margin-bottom: 4px; }
+/* hero dialog — сообщения проявляются по очереди, как в живом чате */
+.lp-chat .lp-msg {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.2, .7, .2, 1);
+  will-change: opacity, transform;
+}
+.lp-chat .lp-msg.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lp-chat .lp-msg { opacity: 1; transform: none; transition: none; }
+}
 .lp-slots { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
 .lp-slot { padding: 6px 11px; border-radius: 9px; font-size: 13px; font-weight: 600; background: var(--bg); border: 1px solid var(--line-strong); color: var(--fg); }
+
+/* hero dialog — Siri-style glass: plain agent text, glass user bubble */
+.lp-chat .lp-msg__label { display: none; }
+.lp-chat .lp-msg--agent {
+  align-self: flex-start; max-width: 100%;
+  background: transparent; border: none;
+  padding: 4px 2px; border-radius: 0;
+  font-size: 15px; line-height: 1.5; color: var(--fg);
+}
+.lp-chat .lp-msg--client {
+  align-self: flex-end; max-width: 82%;
+  background: rgba(43, 84, 255, 0.12); color: var(--fg);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  border-bottom-right-radius: 5px;
+}
 
 /* ============================================================
    PROBLEMS — "Где вы теряете прямо сейчас"
    ============================================================ */
-.lp-problems { position: relative; padding: 96px 0 104px; }
-.lp-section-head { max-width: 760px; margin-bottom: 48px; }
+.lp-problems { position: relative; padding: 96px 0 104px; background: var(--surface); }
+.lp-section-head { max-width: none; margin-bottom: 48px; }
 .lp-h2 {
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(30px, 3.4vw, 46px);
@@ -309,20 +479,23 @@ body {
   display: grid; grid-template-columns: 1fr 1.04fr;
   gap: 72px; align-items: start;
 }
-.lp-audit__left .lp-h2 { max-width: 480px; }
+.lp-audit__left .lp-h2 { max-width: none; }
 .lp-audit__intro {
   margin-top: 22px;
   font-size: 17px; line-height: 1.6; color: var(--sub-fg);
-  letter-spacing: -0.01em; max-width: 470px;
+  letter-spacing: -0.01em; max-width: none;
 }
-.lp-audit__meta { display: flex; gap: 56px; margin-top: 40px; }
+.lp-audit__meta { display: flex; gap: 40px; margin-top: 24px; }
 .lp-audit__meta-label {
-  font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
-  text-transform: uppercase; color: var(--faint-fg); margin-bottom: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--faint-fg); margin-bottom: 3px;
 }
 .lp-audit__meta-value {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 24px; letter-spacing: -0.02em; color: var(--fg);
+  font-family: var(--font-body); font-weight: 500;
+  font-size: 14px; letter-spacing: 0; color: var(--faint-fg);
+}
+.lp-audit__download { margin: 26px 0 22px; }
+.lp-audit__download svg { width: 18px; height: 18px; }
 }
 .lp-audit__panel {
   background: var(--bg);
@@ -350,6 +523,14 @@ body {
   color: var(--accent);
 }
 .lp-audit__check svg { display: block; }
+.lp-audit__panel-title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 21px; line-height: 1.25; letter-spacing: -0.02em;
+  color: var(--fg); margin-bottom: 8px;
+}
+.lp-audit__download { margin: 20px 0 22px; }
+.lp-audit__download svg { width: 18px; height: 18px; }
+.lp-accent-text { color: var(--accent); }
 
 /* ============================================================
    SCROLL REVEAL
@@ -373,9 +554,11 @@ body {
   .lp-hero__copy { align-items: center; text-align: center; padding-top: 0; }
   .lp-chat { width: 100%; max-width: 400px; justify-self: center; }
   .lp-hero__copy .lp-cta-block { align-items: center !important; }
+  .lp-hero__heading { gap: 12px !important; }
   .lp-channels__list { justify-content: center; }
   .lp-cta { justify-content: center; }
   .lp-sub { max-width: none; }
+  .lp-rotate__word { left: 0; right: 0; text-align: center; }
   .lp-problems__grid { grid-template-columns: 1fr; }
   .lp-problems { padding: 72px 0 80px; }
   .lp-audit { padding: 72px 0 80px; }
@@ -384,8 +567,16 @@ body {
 }
 @media (max-width: 560px) {
   .lp-nav { display: none; }
+  .lp-hero { padding-top: 28px; }
   .lp-cta { width: 100%; }
   .lp-btn--lg { flex: 1; justify-content: center; }
+}
+
+/* демо-чат: переключатель сценариев переносится под шапку на узких экранах */
+@media (max-width: 980px) {
+  .lp-chat__head { flex-wrap: wrap; row-gap: 8px; }
+  .lp-chat__switch { margin-left: 0; width: 100%; }
+  .lp-chat__switch .lp-chat__tab { flex: 1 1 0; }
 }
 
 /* ============================================================
@@ -433,6 +624,8 @@ body {
   background: var(--accent-soft); border: 1px solid var(--accent-line);
   color: var(--accent); font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em;
 }
+.lp-feature__tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.lp-feature__tags .lp-feature__tag { margin-top: 0; }
 .lp-feature__media { position: relative; min-height: 520px; }
 .lp-feature__chat {
   position: absolute; inset: 0;
@@ -443,12 +636,26 @@ body {
 .lp-feature__chat.is-active { opacity: 1; }
 .lp-feature__chat.is-done { opacity: 0; transform: translateY(-24px) scale(.98); pointer-events: none; }
 .lp-chatcard {
-  display: flex; flex-direction: column; gap: 11px;
+  display: flex; flex-direction: column;
   width: 100%; max-width: 470px;
-  padding: 20px 18px 24px;
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-pop);
+  overflow: hidden;
 }
+.lp-chatcard__head { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.lp-chatcard__avatar { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--accent); }
+.lp-chatcard__avatar svg { display: block; width: 17px; height: 17px; }
+.lp-chatcard__id { display: flex; flex-direction: column; gap: 2px; line-height: 1.15; }
+.lp-chatcard__name { font-family: var(--font-display); font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; color: var(--fg); }
+.lp-chatcard__status { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--faint-fg); }
+.lp-chatcard__dot { width: 7px; height: 7px; border-radius: 50%; background: #28c840; flex: none; }
+.lp-chatcard__body { display: flex; flex-direction: column; gap: 10px; padding: 18px 16px; }
+.lp-chatcard .lp-msg__label { display: none; }
+.lp-chatcard__input { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); }
+.lp-chatcard__btn { width: 34px; height: 34px; border-radius: 50%; flex: none; border: 1px solid var(--line-strong); background: #fff; color: var(--sub-fg); display: grid; place-items: center; cursor: pointer; }
+.lp-chatcard__btn svg { display: block; width: 16px; height: 16px; }
+.lp-chatcard__btn--send { background: var(--accent); border-color: var(--accent); color: #fff; }
+.lp-chatcard__field { flex: 1; font-size: 13.5px; color: var(--faint-fg); padding: 9px 14px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
 
 /* ============================================================
    ADV — «Готов к работе из коробки»
@@ -458,10 +665,10 @@ body {
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   padding: 96px 0 104px;
 }
-.lp-adv__header { max-width: 760px; margin-bottom: 56px; }
+.lp-adv__header { max-width: none; margin-bottom: 56px; }
 .lp-adv__intro {
   margin-top: 18px; font-size: 17px; line-height: 1.6;
-  color: var(--sub-fg); letter-spacing: -0.01em; max-width: 520px;
+  color: var(--sub-fg); letter-spacing: -0.01em; max-width: none;
 }
 .lp-adv__collage {
   position: relative;
@@ -539,6 +746,33 @@ body {
 }
 .lp-adv__item-text { font-size: 15px; line-height: 1.55; color: var(--sub-fg); letter-spacing: -0.01em; }
 
+/* ADV — full-width landing blocks */
+.lp-adv__blocks { border-top: 1px solid var(--line-strong); }
+.lp-adv__block {
+  display: grid; grid-template-columns: 0.85fr 1.15fr;
+  gap: 48px; align-items: start;
+  padding: 40px 0; border-bottom: 1px solid var(--line-strong);
+}
+.lp-adv__block-head { display: flex; align-items: center; gap: 18px; }
+.lp-adv__block-num {
+  flex: none; width: 46px; height: 46px; border-radius: 13px;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.lp-adv__block-num svg { width: 24px; height: 24px; display: block; }
+.lp-adv__block-title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(22px, 2.1vw, 30px); line-height: 1.18;
+  letter-spacing: -0.02em; color: var(--fg);
+}
+.lp-adv__block-text {
+  font-size: 17px; line-height: 1.6; color: var(--sub-fg);
+  letter-spacing: -0.01em; max-width: 540px;
+}
+@media (max-width: 980px) {
+  .lp-adv__block { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
+}
+
 /* доп. карточки: расписание + сценарий */
 .lp-advcard__slots { display: flex; flex-wrap: wrap; gap: 6px; }
 .lp-advcard__slot {
@@ -615,6 +849,36 @@ body {
 }
 .lp-step__text { font-size: 15.5px; line-height: 1.6; color: var(--sub-fg); letter-spacing: -0.01em; max-width: 480px; }
 
+.lp-process {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+}
+.lp-process__step { position: relative; }
+.lp-process__head {
+  position: relative; height: 52px;
+  display: flex; align-items: center; margin-bottom: 24px;
+}
+.lp-process__node {
+  width: 52px; height: 52px; border-radius: 50%; flex: none; z-index: 1;
+  display: grid; place-items: center;
+  background: var(--accent); color: #fff;
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.01em;
+  box-shadow: 0 10px 22px -10px rgba(43, 84, 255, 0.65);
+}
+.lp-process__step:not(:last-child) .lp-process__head::after {
+  content: ""; position: absolute; top: 50%; left: 52px; right: -28px;
+  height: 2px; transform: translateY(-50%);
+  background: repeating-linear-gradient(90deg, var(--accent-line) 0 7px, transparent 7px 13px);
+}
+.lp-process__title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(18px, 1.5vw, 21px); line-height: 1.22;
+  letter-spacing: -0.02em; color: var(--fg); margin-bottom: 12px;
+}
+.lp-process__text {
+  font-size: 15px; line-height: 1.6; color: var(--sub-fg); letter-spacing: -0.01em;
+}
+
 /* ============================================================
    CALC — калькулятор эффекта
    ============================================================ */
@@ -623,17 +887,37 @@ body {
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   padding: 96px 0 104px;
 }
-.lp-calc__header { max-width: 760px; margin-bottom: 48px; }
+.lp-calc__header { max-width: none; margin-bottom: 48px; }
 .lp-calc__intro {
   margin-top: 18px; font-size: 17px; line-height: 1.6;
-  color: var(--sub-fg); letter-spacing: -0.01em; max-width: 560px;
+  color: var(--sub-fg); letter-spacing: -0.01em; max-width: none;
 }
-.lp-calc__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
-.lp-calc__panel {
-  background: var(--bg); border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 34px 36px 40px;
+.lp-calc__card {
+  display: grid; grid-template-columns: 1.05fr 0.95fr;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
+.lp-calc__inputs { padding: 36px 38px 40px; }
+.lp-calc__results {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 34px 38px 38px;
+  background: radial-gradient(130% 150% at 100% 0%, #3f6dff 0%, #2b54ff 46%, #1c3ec9 100%);
+  color: #fff;
+}
+.lp-calc__results-label {
+  font-size: 12.5px; font-weight: 650; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;
+}
+.lp-calc__lines { display: flex; flex-direction: column; margin-bottom: auto; }
+.lp-calc__line-ico {
+  width: 36px; height: 36px; border-radius: 11px; flex: none;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.14); color: #fff;
+}
+.lp-calc__line-ico svg { display: block; width: 20px; height: 20px; }
+.lp-calc__results .lp-tip { border-color: rgba(255, 255, 255, 0.5); color: #fff; }
 .lp-calc__panel-label {
   font-size: 12.5px; font-weight: 650; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--faint-fg); margin-bottom: 16px;
@@ -668,18 +952,19 @@ body {
   border: none; box-shadow: none;
   cursor: pointer;
 }
-.lp-calc__block { margin-bottom: 24px; }
-.lp-calc__block:last-of-type { margin-bottom: 0; }
 .lp-calc__line {
-  display: flex; justify-content: space-between; align-items: baseline;
-  gap: 16px; padding: 13px 0;
-  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 13px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
-.lp-calc__line:first-of-type { border-top: 1px solid var(--line); }
-.lp-calc__line-label { font-size: 14.5px; line-height: 1.45; color: var(--sub-fg); }
+.lp-calc__line:last-child { border-bottom: none; }
+.lp-calc__line-label {
+  flex: 1; font-size: 14px; line-height: 1.4;
+  color: rgba(255, 255, 255, 0.88); letter-spacing: -0.01em;
+}
 .lp-calc__line-value {
   font-family: var(--font-display); font-weight: 600; font-size: 17px;
-  letter-spacing: -0.01em; color: var(--fg); white-space: nowrap;
+  letter-spacing: -0.01em; color: #fff; white-space: nowrap;
 }
 .lp-tip {
   position: relative;
@@ -707,21 +992,21 @@ body {
 .lp-tip:hover .lp-tip__text { opacity: 1; visibility: visible; }
 .lp-calc__total {
   display: flex; justify-content: space-between; align-items: baseline;
-  gap: 16px; padding-top: 22px; margin-top: 24px;
-  border-top: 1px solid var(--line);
+  gap: 16px; padding-top: 22px; margin-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
 }
 .lp-calc__total-label {
   font-family: var(--font-display); font-weight: 600; font-size: 18px;
-  letter-spacing: -0.02em; color: var(--fg);
+  letter-spacing: -0.02em; color: #fff;
 }
 .lp-calc__total-value {
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(26px, 2.4vw, 34px); line-height: 1;
-  letter-spacing: -0.02em; color: var(--fg); white-space: nowrap;
+  letter-spacing: -0.02em; color: #fff; white-space: nowrap;
 }
 .lp-calc__total--year { padding-top: 10px; margin-top: 0; border-top: none; }
-.lp-calc__total--year .lp-calc__total-label { color: var(--faint-fg); font-size: 15px; }
-.lp-calc__total--year .lp-calc__total-value { color: var(--sub-fg); font-size: 19px; }
+.lp-calc__total--year .lp-calc__total-label { color: rgba(255,255,255,.7); font-size: 15px; }
+.lp-calc__total--year .lp-calc__total-value { color: rgba(255,255,255,.85); font-size: 19px; }
 
 /* ============================================================
    QUALITY — «Почему гарантируем результат»
@@ -739,9 +1024,15 @@ body {
 }
 .lp-quality__text { font-size: 16.5px; line-height: 1.65; color: var(--sub-fg); letter-spacing: -0.01em; max-width: 520px; }
 .lp-quality__text mark {
-  background: var(--accent-soft); color: var(--fg);
+  background: var(--accent-soft); color: var(--accent);
   padding: 1px 5px; border-radius: 5px;
 }
+.lp-quality__ico {
+  width: 46px; height: 46px; border-radius: 13px; margin-bottom: 20px;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.lp-quality__ico svg { display: block; width: 24px; height: 24px; }
 
 /* ============================================================
    FAQ — частые вопросы
@@ -757,7 +1048,7 @@ body {
 }
 .lp-faq__intro {
   margin-top: 18px; font-size: 16.5px; line-height: 1.6;
-  color: var(--sub-fg); letter-spacing: -0.01em; max-width: 360px;
+  color: var(--sub-fg); letter-spacing: -0.01em; max-width: none;
 }
 .lp-faq__list { border-top: 1px solid var(--line); }
 .lp-faq-item { border-bottom: 1px solid var(--line); }
@@ -799,10 +1090,11 @@ body {
    PRICING — тарифы + триал
    ============================================================ */
 .lp-pricing { padding: 96px 0 110px; }
+.lp-finalcta { scroll-margin-top: 92px; }
 .lp-pricing__header { text-align: center; margin-bottom: 56px; }
 .lp-pricing__sub {
   margin: 16px auto 0; font-size: 17px; line-height: 1.6;
-  color: var(--sub-fg); letter-spacing: -0.01em; max-width: 540px;
+  color: var(--sub-fg); letter-spacing: -0.01em; max-width: none;
 }
 .lp-pricing__grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -871,12 +1163,133 @@ body {
 }
 .lp-pricing__trial-cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
+/* FINAL CTA — градиентный блок с формой */
+.lp-finalcta {
+  position: relative; overflow: hidden;
+  margin-top: 64px; border-radius: 32px; padding: 84px 32px 95px; text-align: center;
+  background:
+    radial-gradient(58% 80% at 14% 8%, rgba(43, 84, 255, 0.28), transparent 60%),
+    radial-gradient(54% 74% at 88% 16%, rgba(0, 170, 255, 0.30), transparent 60%),
+    radial-gradient(70% 90% at 82% 104%, rgba(0, 210, 230, 0.26), transparent 60%),
+    linear-gradient(135deg, #e2eaff 0%, #e1f1ff 50%, #e2fbff 100%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.lp-finalcta::before {
+  content: ""; position: absolute; inset: -45%; pointer-events: none;
+  background: conic-gradient(from 0deg at 50% 50%,
+    rgba(43, 84, 255, 0) 0deg,
+    rgba(43, 84, 255, 0.45) 60deg,
+    rgba(0, 200, 255, 0.42) 140deg,
+    rgba(120, 70, 255, 0.40) 220deg,
+    rgba(43, 84, 255, 0) 310deg);
+  filter: blur(34px);
+  animation: ctaShimmer 8s linear infinite;
+}
+.lp-finalcta::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(43, 84, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43, 84, 255, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+  -webkit-mask-image: radial-gradient(82% 82% at 50% 38%, #000 28%, transparent 78%);
+  mask-image: radial-gradient(82% 82% at 50% 38%, #000 28%, transparent 78%);
+}
+@keyframes ctaShimmer { to { transform: rotate(1turn); } }
+@media (prefers-reduced-motion: reduce) {
+  .lp-finalcta::before { animation: none; }
+}
+.lp-finalcta__title, .lp-finalcta__form { position: relative; z-index: 1; }
+.lp-finalcta__title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(32px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -0.03em;
+  color: var(--fg); margin-bottom: 40px; text-wrap: balance;
+}
+.lp-finalcta__form { display: flex; gap: 12px; max-width: 640px; width: 100%; margin: 0 auto; }
+.lp-finalcta__input {
+  flex: 1; min-width: 0; height: 66px; padding: 0 26px;
+  border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 24px -14px rgba(20, 28, 60, 0.4);
+  font-family: var(--font-body); font-size: 16px; color: var(--fg); outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.lp-finalcta__input::placeholder { color: rgba(40, 50, 80, 0.6); }
+.lp-finalcta__input:focus {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 0 0 4px var(--accent-soft);
+}
+.lp-finalcta__btn {
+  flex: none; height: 66px; padding: 0 36px; border-radius: 999px; border: none;
+  background: var(--accent); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 16px;
+  cursor: pointer; white-space: nowrap;
+  transition: background .15s ease, transform .12s ease;
+}
+.lp-finalcta__btn:hover { background: var(--accent-hover); }
+.lp-finalcta__btn:active { transform: translateY(1px); }
+@media (max-width: 600px) {
+  .lp-finalcta { padding: 56px 20px; border-radius: 24px; }
+  .lp-finalcta__form { flex-direction: column; }
+  .lp-finalcta__input { flex: none; width: 100%; height: 62px; }
+  .lp-finalcta__btn { width: 100%; height: 62px; }
+}
+
+/* CONTACTS — «Мы всегда на связи» */
+.lp-contacts { padding: 96px 0 104px; }
+.lp-contacts__intro {
+  margin-top: 18px; font-size: 17px; line-height: 1.6;
+  color: var(--sub-fg); letter-spacing: -0.01em; max-width: none;
+}
+.lp-contacts__grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 44px;
+}
+.lp-contact {
+  display: flex; gap: 20px; align-items: center;
+  padding: 28px 30px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+}
+.lp-contact__avatar {
+  width: 58px; height: 58px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+  font-family: var(--font-display); font-weight: 700; font-size: 23px;
+}
+.lp-contact__name {
+  font-family: var(--font-display); font-weight: 600; font-size: 20px;
+  letter-spacing: -0.02em; color: var(--fg); margin-bottom: 0;
+}
+.lp-contact__links { display: flex; flex-direction: column; gap: 9px; }
+.lp-contact__link {
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--sub-fg); font-size: 15px; font-weight: 500; letter-spacing: -0.01em;
+  transition: color .15s ease;
+}
+.lp-contact__link:hover { color: var(--accent); }
+.lp-contact__link svg { width: 17px; height: 17px; flex: none; color: var(--accent); }
+.lp-contact__actions { display: flex; gap: 10px; margin-left: auto; }
+.lp-contact__btn {
+  width: 44px; height: 44px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--sub-fg);
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.lp-contact__btn:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
+.lp-contact__btn svg { width: 19px; height: 19px; display: block; }
+@media (max-width: 720px) {
+  .lp-contacts { padding: 72px 0 80px; }
+  .lp-contacts__grid { grid-template-columns: 1fr; }
+}
+
 /* ============================================================
    RESPONSIVE — новые секции
    ============================================================ */
 @media (max-width: 980px) {
-  .lp-features__header { padding-top: 72px; }
-  .lp-features__scroll { height: auto; }
+  .lp-features__header { padding-top: 72px; margin-bottom: 44px; }
+  .lp-feature__media { display: none; }
+  .lp-features__scroll { height: auto; padding-bottom: 88px; }
   .lp-features__sticky { position: static; height: auto; display: block; overflow: visible; }
   .lp-feature__grid { grid-template-columns: 1fr; gap: 40px; }
   .lp-feature__stack { min-height: 0; }
@@ -902,16 +1315,67 @@ body {
   .lp-adv__grid { grid-template-columns: 1fr; }
   .lp-steps { padding: 72px 0 80px; }
   .lp-steps__grid { grid-template-columns: 1fr; }
+  .lp-process { display: flex; flex-direction: column; gap: 0; }
+  .lp-process__step {
+    display: grid; grid-template-columns: 52px 1fr; column-gap: 18px;
+    padding-bottom: 30px;
+  }
+  .lp-process__step:last-child { padding-bottom: 0; }
+  .lp-process__head {
+    grid-column: 1; grid-row: 1 / 3; height: auto; margin: 0;
+    align-items: flex-start;
+  }
+  .lp-process__step:not(:last-child) .lp-process__head::after {
+    top: 52px; bottom: -30px; left: 50%; right: auto;
+    width: 2px; height: auto; transform: translateX(-50%);
+    background: repeating-linear-gradient(180deg, var(--accent-line) 0 7px, transparent 7px 13px);
+  }
+  .lp-process__title { grid-column: 2; grid-row: 1; margin-bottom: 8px; align-self: center; }
+  .lp-process__text { grid-column: 2; grid-row: 2; }
   .lp-calc { padding: 72px 0 80px; }
-  .lp-calc__grid { grid-template-columns: 1fr; }
+  .lp-calc__card { grid-template-columns: 1fr; }
   .lp-quality { padding: 72px 0 80px; }
   .lp-quality__grid { grid-template-columns: 1fr; gap: 40px; }
   .lp-quality__divider { display: none; }
   .lp-faq { padding: 72px 0 80px; }
   .lp-faq__grid { grid-template-columns: 1fr; gap: 40px; }
   .lp-pricing { padding: 72px 0 88px; }
-  .lp-pricing__grid { grid-template-columns: 1fr; }
+  .lp-pricing__grid {
+    display: flex; grid-template-columns: none;
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 14px; margin: 0 calc(var(--gutter) * -1); padding: 4px var(--gutter) 16px;
+    scrollbar-width: none;
+  }
+  .lp-pricing__grid::-webkit-scrollbar { display: none; }
+  .lp-plan {
+    flex: 0 0 92%; min-width: 92%; scroll-snap-align: center;
+  }
   .lp-pricing__trial { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* «Что агент берёт на себя» — горизонтальный скролл на узких экранах */
+@media (max-width: 400px) {
+  .lp-feature__grid { gap: 22px; }
+  .lp-feature__stack {
+    display: flex; flex-wrap: nowrap;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 12px; margin: 0 -20px; padding: 4px 20px 14px;
+    scrollbar-width: none;
+  }
+  .lp-feature__stack::-webkit-scrollbar { display: none; }
+  .lp-feature__card {
+    flex: 0 0 86%; min-width: 86%; scroll-snap-align: center;
+    margin-bottom: 0 !important;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+    padding: 22px 20px;
+  }
+  .lp-feature__chat {
+    flex: 0 0 86%; min-width: 86%; scroll-snap-align: center;
+    margin-bottom: 0 !important;
+  }
 }
 
 /* ============================================================
@@ -973,4 +1437,8 @@ body {
 @media (max-width: 480px) {
   .lp-footer__cols { grid-template-columns: 1fr 1fr; }
   .lp-footer__bottom { flex-direction: column; align-items: flex-start; }
+  .lp-contact { padding: 20px; gap: 14px; }
+  .lp-contact__avatar { width: 50px; height: 50px; font-size: 20px; }
+  .lp-calc__inputs { padding: 28px 22px 30px; }
+  .lp-calc__results { padding: 28px 22px 32px; }
 }

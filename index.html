@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Onest:wght@400;450;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles/studio.css?v=8">
+<link rel="stylesheet" href="styles/studio.css?v=48">
 </head>
 <body>
 
@@ -27,6 +27,7 @@
 <!-- NAV -->
 <nav class="lp-nav">
   <a class="lp-brand" href="#">
+    <span class="lp-brand__mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 5h15A1.5 1.5 0 0 1 21 6.5v8A1.5 1.5 0 0 1 19.5 16H10l-4.1 3.2A.6.6 0 0 1 5 18.7V6.5A1.5 1.5 0 0 1 6.5 5Z" fill="#fff"/></svg></span>
     <span class="lp-brand__name">СЛОТ</span>
   </a>
   <ul class="lp-nav__links">
@@ -36,29 +37,25 @@
     <li><a href="#">Кейсы</a></li>
   </ul>
   <div class="lp-nav__cta">
-    <a href="#" class="lp-btn lp-btn--primary">Попробовать бесплатно</a>
+    <a href="#finalcta" class="lp-btn lp-btn--primary">Попробовать бесплатно</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="lp-hero">
-  <div class="lp-gridbg"></div>
+  <div class="lp-hero__aurora" aria-hidden="true"></div>
   <div class="lp__container">
-    <div class="lp-hero__grid" style="padding: 64px 0px 100px">
+    <div class="lp-hero__grid">
 
-      <div class="lp-hero__copy" style="gap: 24px">
-        <div class="lp-hero__heading" data-reveal style="display: flex; flex-direction: column; gap: 14px">
-          <h1 class="lp-h1" style="line-height: 1.2">Не теряйте клиентов в эпоху ИИ</h1>
-          <p class="lp-sub" style="margin: 0px">Омниканальный ИИ-агент, который знает ваши услуги, сам записывает клиентов и делает продажи.</p>
-        </div>
-        <div class="lp-channels" data-reveal style="transition-delay:140ms">
-          <ul class="lp-channels__list" data-channels></ul>
+      <div class="lp-hero__copy" style="gap: 25px">
+        <div class="lp-hero__heading" data-reveal style="display: flex; flex-direction: column; gap: 24px">
+          <h1 class="lp-h1" style="line-height: 1.2">ИИ-агент для&nbsp;<span class="lp-rotate" data-rotate><span class="lp-rotate__sizer" aria-hidden="true">записи на&nbsp;услуги</span><span class="lp-rotate__word is-active">продаж</span><span class="lp-rotate__word">консультаций</span><span class="lp-rotate__word">записи на&nbsp;услуги</span></span></h1>
+          <p class="lp-sub" style="margin: 0px">— Омниканально <span class="lp-sub__channels" data-channels-inline></span><br>— По согласованным сценариям <br>— Перед внедрением проводим <a href="#audit" class="lp-sub__audit" style="color: #2b54ff">бесплатный аудит</a></p>
         </div>
         <div class="lp-cta-block" data-reveal style="transition-delay: 210ms; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin: 20px 0px 0px">
           <div class="lp-cta">
-            <a href="#" class="lp-btn lp-btn--primary lp-btn--lg" style="padding: 16px 26px; margin: 0px">Попробовать бесплатно</a>
+            <a href="#finalcta" class="lp-btn lp-btn--primary lp-btn--lg" style="padding: 16px 26px; margin: 0px">Попробовать бесплатно</a>
           </div>
-          <p class="lp-note" style="width: 241px; margin: 0px; text-align: left">Перед внедрением проводим <u><span style="color: #004aff">бесплатный аудит</span></u> ваших диалогов</p>
         </div>
       </div>
 
@@ -100,27 +97,18 @@
 </section>
 
 <!-- AUDIT -->
-<section class="lp-audit">
+<section class="lp-audit" id="audit">
   <div class="lp__container">
     <div class="lp-audit__grid">
 
       <div class="lp-audit__left" data-reveal>
-        <h2 class="lp-h2" style="color: rgb(0, 0, 0)">Изучим ваш бизнес и найдём точки роста</h2>
-        <p class="lp-audit__intro">Мы не запускаем агента вслепую. До любых внедрений берём 5–10 реальных диалогов ваших администраторов и&nbsp;разбираем их по полочкам. На выходе — отчёт, который вы получаете независимо от того, продолжим мы работу или нет.</p>
-        <div class="lp-audit__meta">
-          <div class="lp-audit__meta-item">
-            <div class="lp-audit__meta-label">Срок</div>
-            <div class="lp-audit__meta-value">5–7 дней</div>
-          </div>
-          <div class="lp-audit__meta-item">
-            <div class="lp-audit__meta-label">Стоимость</div>
-            <div class="lp-audit__meta-value">Бесплатно</div>
-          </div>
-        </div>
+        <h2 class="lp-h2" style="color: rgb(0, 0, 0)">Проведем <span class="lp-accent-text">бесплатный аудит</span> и найдём точки роста</h2>
+        <p class="lp-audit__intro">Возьмем 10–15 реальных диалогов ваших администраторов и разберем их. Готовим отчёт за&nbsp;5–7&nbsp;дней — и вы получаете его независимо от того, продолжим мы работу или нет.</p>
+        <a href="#" class="lp-btn lp-btn--ghost lp-audit__download"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Скачать пример аудита (PDF)</a>
       </div>
 
       <div class="lp-audit__panel" data-reveal style="transition-delay:120ms">
-        <div class="lp-audit__label">На какие вопросы ответит аудит</div>
+        <div class="lp-audit__panel-title">На какие вопросы ответит аудит</div>
         <ul class="lp-audit__questions">
           <li><span class="lp-audit__check" data-check></span>На каких вопросах администраторы теряют клиентов чаще всего</li>
           <li><span class="lp-audit__check" data-check></span>Какие услуги недопродаются из-за слабых ответов в&nbsp;переписке</li>
@@ -139,7 +127,7 @@
 <section class="lp-features" id="features" data-screen-label="Что агент берёт на себя">
   <div class="lp__container">
     <div class="lp-features__header" data-reveal>
-      <h2 class="lp-h2">Что агент берёт на себя</h2>
+      <h2 class="lp-h2">Что агент берёт на&nbsp;себя</h2>
     </div>
   </div>
 
@@ -158,13 +146,17 @@
 
               <div class="lp-feature__card is-active" data-fcard="0">
                 <div class="lp-feature__num">01</div>
-                <div class="lp-feature__title">Расскажет об услугах</div>
+                <div class="lp-feature__title">Расскажет об&nbsp;услугах</div>
                 <p class="lp-feature__text">Знает прайс, состав процедур, противопоказания, мастеров и&nbsp;расписание. Отвечает так, как ответил бы лучший администратор сети.</p>
+                <div class="lp-feature__tags">
+                  <span class="lp-feature__tag">Обучен только на ваших данных</span>
+                  <span class="lp-feature__tag">без галлюцинаций</span>
+                </div>
               </div>
 
               <div class="lp-feature__card is-next" data-fcard="1">
                 <div class="lp-feature__num">02</div>
-                <div class="lp-feature__title">Запишет к специалисту</div>
+                <div class="lp-feature__title">Запишет к&nbsp;специалисту</div>
                 <p class="lp-feature__text">Подберёт слот, согласует время, оформит запись в&nbsp;вашей системе. Перенесёт и&nbsp;отменит, если нужно.</p>
                 <span class="lp-feature__tag">Интеграция с YCLIENTS</span>
               </div>
@@ -173,6 +165,7 @@
                 <div class="lp-feature__num">03</div>
                 <div class="lp-feature__title">Продаст подарочный сертификат</div>
                 <p class="lp-feature__text">Доведёт клиента до оплаты: предложит номинал, оформит сертификат и&nbsp;пришлёт его покупателю или сразу получателю.</p>
+                <span class="lp-feature__tag">Конструктор сертификатов</span>
               </div>
             </div>
 
@@ -188,9 +181,9 @@
 <!-- ADVANTAGES -->
 <section class="lp-adv" data-screen-label="Готов к работе из коробки">
   <div class="lp__container">
-    <div class="lp-adv__header" data-reveal>
-      <h2 class="lp-h2">Готов к работе из коробки</h2>
-      <p class="lp-adv__intro">Мы не продаём конструктор, в&nbsp;котором вам предстоит разбираться. Агент приходит уже настроенным под вашу сеть.</p>
+    <div class="lp-adv__header" data-reveal style="margin: 0px 0px 41px">
+      <h2 class="lp-h2">Не требует сложных настроек</h2>
+      <p class="lp-adv__intro">Мы не продаём конструктор, в котором вам предстоит разбираться. Мы сами настроим агента под вашу сеть.</p>
     </div>
 
     <div class="lp-adv__collage" data-reveal>
@@ -277,18 +270,18 @@
 
     </div>
 
-    <div class="lp-adv__grid">
-      <div class="lp-adv__item" data-reveal style="transition-delay:0ms">
-        <div class="lp-adv__item-title">Работает омниканально</div>
-        <p class="lp-adv__item-text">Telegram, Max, Avito, ВКонтакте, виджет на сайте, отдельная страница-чат. Один агент, одна база знаний, единые сценарии.</p>
+    <div class="lp-adv__blocks">
+      <div class="lp-adv__block" data-reveal style="transition-delay:0ms">
+        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="2"/><path d="M6 6a8.5 8.5 0 0 0 0 12M18 6a8.5 8.5 0 0 1 0 12M8.6 8.6a5 5 0 0 0 0 6.8M15.4 8.6a5 5 0 0 1 0 6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><h3 class="lp-adv__block-title">Работает омниканально</h3></div>
+        <p class="lp-adv__block-text">Telegram, Max, Avito, ВКонтакте, виджет на сайте, отдельная страница-чат. Один агент, одна база знаний, единые сценарии.</p>
       </div>
-      <div class="lp-adv__item" data-reveal style="transition-delay:90ms">
-        <div class="lp-adv__item-title">Говорит голосом вашего бренда</div>
-        <p class="lp-adv__item-text">Настройка tone of voice под бренд: премиальный салон и&nbsp;сеть эконом-сегмента говорят по-разному. Мы заранее настраиваем это.</p>
+      <div class="lp-adv__block" data-reveal style="transition-delay:90ms">
+        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 5h15A1.5 1.5 0 0 1 21 6.5v8A1.5 1.5 0 0 1 19.5 16H10l-4.1 3.2A.6.6 0 0 1 5 18.7V6.5A1.5 1.5 0 0 1 6.5 5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9.5v3M12 8v6M15 10v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><h3 class="lp-adv__block-title">Говорит голосом вашего бренда</h3></div>
+        <p class="lp-adv__block-text">Настройка tone of voice под бренд: премиальный салон и&nbsp;сеть эконом-сегмента говорят по-разному. Мы заранее настраиваем это.</p>
       </div>
-      <div class="lp-adv__item" data-reveal style="transition-delay:180ms">
-        <div class="lp-adv__item-title">Не выдумывает лишнего</div>
-        <p class="lp-adv__item-text">Работает строго по согласованным сценариям. Не выдумает цену, не пообещает скидку, не назначит процедуру, которой у&nbsp;вас нет.</p>
+      <div class="lp-adv__block" data-reveal style="transition-delay:180ms">
+        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="lp-adv__block-title">Не выдумывает лишнего</h3></div>
+        <p class="lp-adv__block-text">Работает строго по согласованным сценариям. Не выдумает цену, не пообещает скидку, не назначит процедуру, которой у&nbsp;вас нет.</p>
       </div>
     </div>
   </div>
@@ -298,28 +291,28 @@
 <section class="lp-steps" id="steps" data-screen-label="Запустим за 4 недели">
   <div class="lp__container">
     <div class="lp-section-head" data-reveal>
-      <h2 class="lp-h2">Запустим за 3 дня и останемся рядом</h2>
+      <h2 class="lp-h2">Запустим за&nbsp;3 дня и останемся рядом</h2>
     </div>
-    <div class="lp-steps__grid">
-      <div class="lp-step" data-reveal style="transition-delay:0ms">
-        <div class="lp-step__num">01</div>
-        <div class="lp-step__title">Аудит и база знаний</div>
-        <p class="lp-step__text">Подключаемся к вашим каналам, слушаем записи, собираем материалы по услугам, прайсу и&nbsp;процессам. На выходе — структурированная база знаний сети, на которой будет работать агент.</p>
+    <div class="lp-process">
+      <div class="lp-process__step" data-reveal style="transition-delay:0ms">
+        <div class="lp-process__head"><span class="lp-process__node">01</span></div>
+        <div class="lp-process__title">Проведём аудит и&nbsp;соберём базу знаний</div>
+        <p class="lp-process__text">Подключаемся к вашим каналам, слушаем записи, собираем материалы по услугам, прайсу и&nbsp;процессам. На выходе — структурированная база знаний сети, на которой будет работать агент.</p>
       </div>
-      <div class="lp-step" data-reveal style="transition-delay:90ms">
-        <div class="lp-step__num">02</div>
-        <div class="lp-step__title">Сценарии и tone of voice</div>
-        <p class="lp-step__text">Прописываем сценарии записи, продажи сертификата, ответов на возражения. Подбираем ToV под бренд — премиальный салон и&nbsp;сеть эконом-сегмента говорят по-разному. Согласуем формулировки с&nbsp;вами.</p>
+      <div class="lp-process__step" data-reveal style="transition-delay:90ms">
+        <div class="lp-process__head"><span class="lp-process__node">02</span></div>
+        <div class="lp-process__title">Пропишем сценарии и&nbsp;tone of voice</div>
+        <p class="lp-process__text">Прописываем сценарии записи, продажи сертификата, ответов на возражения. Подбираем ToV под бренд — премиальный салон и&nbsp;сеть эконом-сегмента говорят по-разному. Согласуем формулировки с&nbsp;вами.</p>
       </div>
-      <div class="lp-step" data-reveal style="transition-delay:180ms">
-        <div class="lp-step__num">03</div>
-        <div class="lp-step__title">Обучение и тестирование</div>
-        <p class="lp-step__text">Тестируем агента сначала локально на синтетических диалогах, затем — на реальных запросах клиентов. Передаём в&nbsp;автономный режим только после того, как вы убедитесь в&nbsp;качестве.</p>
+      <div class="lp-process__step" data-reveal style="transition-delay:180ms">
+        <div class="lp-process__head"><span class="lp-process__node">03</span></div>
+        <div class="lp-process__title">Обучим и&nbsp;протестируем агента</div>
+        <p class="lp-process__text">Тестируем агента сначала локально на синтетических диалогах, затем — на реальных запросах клиентов. Передаём в&nbsp;автономный режим только после того, как вы убедитесь в&nbsp;качестве.</p>
       </div>
-      <div class="lp-step" data-reveal style="transition-delay:270ms">
-        <div class="lp-step__num">04</div>
-        <div class="lp-step__title">Запуск и развитие</div>
-        <p class="lp-step__text">Подключаем каналы, мониторим первые недели. Дальше регулярно анализируем чаты: где агент теряет клиента, где можно дожать продажу, какие сценарии добавить. Обновляем под новые услуги и&nbsp;акции без доплат.</p>
+      <div class="lp-process__step" data-reveal style="transition-delay:270ms">
+        <div class="lp-process__head"><span class="lp-process__node">04</span></div>
+        <div class="lp-process__title">Запустим и&nbsp;будем развивать</div>
+        <p class="lp-process__text">Подключаем каналы, мониторим первые недели. Дальше регулярно анализируем чаты: где агент теряет клиента, где можно дожать продажу, какие сценарии добавить. Обновляем под новые услуги и&nbsp;акции без доплат.</p>
       </div>
     </div>
   </div>
@@ -329,13 +322,13 @@
 <section class="lp-calc" data-screen-label="Калькулятор эффекта">
   <div class="lp__container">
     <div class="lp-calc__header" data-reveal>
-      <h2 class="lp-h2">Посчитайте эффект для вашей сети</h2>
-      <p class="lp-calc__intro">Подвигайте ползунки под параметры вашего бизнеса — расчёт обновится сразу. Это оценка по средним показателям индустрии; точные цифры по вашей сети дадим после аудита.</p>
+      <h2 class="lp-h2">Посчитайте эффект сами</h2>
+      <p class="lp-calc__intro">Рассчитайте экономику под параметры вашего бизнеса. Это оценка по средним показателям индустрии; точные цифры по вашей сети дадим после аудита.</p>
     </div>
 
-    <div class="lp-calc__grid">
+    <div class="lp-calc__card" data-reveal>
 
-      <div class="lp-calc__panel" data-reveal>
+      <div class="lp-calc__inputs">
         <div class="lp-calc__panel-label">Параметры сети</div>
         <div class="lp-field">
           <div class="lp-field__row">
@@ -363,25 +356,25 @@
             <span class="lp-field__label">Визитов в месяц на всю сеть</span>
             <span class="lp-field__value" id="v-visits">600</span>
           </div>
-          <input type="range" id="r-visits" min="50" max="5000" step="50" value="600">
+          <input type="range" id="r-visits" min="50" max="3000" step="50" value="600">
         </div>
       </div>
 
-      <div class="lp-calc__panel" data-reveal style="transition-delay:120ms">
-        <div class="lp-calc__block" style="margin: 0px 0px 24px">
-          <div class="lp-calc__panel-label">Экономия на операционке</div>
+      <div class="lp-calc__results">
+        <div class="lp-calc__results-label">Что это даёт сети</div>
+        <div class="lp-calc__lines">
           <div class="lp-calc__line">
+            <span class="lp-calc__line-ico" data-ico="money"></span>
             <span class="lp-calc__line-label">Высвобождение времени на переписку<span class="lp-tip">?<span class="lp-tip__text">Экономия учитывает только долю рабочего времени администратора, которая уходит на текстовые каналы — сам администратор остаётся в зале. По оценке индустрии это около 30% его рабочего времени.</span></span></span>
             <span class="lp-calc__line-value" id="v-fot">60 000 ₽</span>
           </div>
-        </div>
-        <div class="lp-calc__block">
-          <div class="lp-calc__panel-label">Дополнительный доход</div>
           <div class="lp-calc__line">
+            <span class="lp-calc__line-ico" data-ico="clients"></span>
             <span class="lp-calc__line-label">Возврат на повторные визиты</span>
             <span class="lp-calc__line-value" id="v-repeat">120 000 ₽</span>
           </div>
           <div class="lp-calc__line">
+            <span class="lp-calc__line-ico" data-ico="time"></span>
             <span class="lp-calc__line-label">Заявки во внеурочное время 24/7</span>
             <span class="lp-calc__line-value" id="v-night">75 000 ₽</span>
           </div>
@@ -408,11 +401,13 @@
     </div>
     <div class="lp-quality__grid">
       <div class="lp-quality__item" data-reveal>
-        <div class="lp-quality__title">Контроль над ИИ</div>
+        <div class="lp-quality__ico"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="lp-quality__title">Контроль над&nbsp;ИИ</div>
         <p class="lp-quality__text">Агент не выдумывает и&nbsp;не галлюцинирует — его поведение <mark>строго подчинено регламентам</mark>, которые мы прописываем с&nbsp;вами на этапе подготовки. В&nbsp;сложных и&nbsp;нестандартных ситуациях агент сам передаёт диалог администратору или собственнику.</p>
       </div>
       <div class="lp-quality__divider"></div>
       <div class="lp-quality__item" data-reveal style="transition-delay:120ms">
+        <div class="lp-quality__ico"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c0-3 2.6-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16 5.6a3 3 0 0 1 0 5.8M17.5 14.2c2.3.5 3.9 2.3 3.9 4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
         <div class="lp-quality__title">Команда</div>
         <p class="lp-quality__text">За продуктом стоят <mark>лид-специалисты из крупных российских бигтехов</mark> — те, кто строил рекомендательные системы, поисковые сервисы и&nbsp;продуктовые ИИ-команды. Архитектура, тестирование и&nbsp;контроль качества — на уровне enterprise.</p>
       </div>
@@ -492,6 +487,38 @@
   </div>
 </section>
 
+<!-- CONTACTS -->
+<section class="lp-contacts" data-screen-label="Мы всегда на связи">
+  <div class="lp__container">
+    <div class="lp-section-head" data-reveal>
+      <h2 class="lp-h2">Мы всегда на&nbsp;связи</h2>
+      <p class="lp-contacts__intro">Напишите или позвоните — ответим лично и поможем с запуском.</p>
+    </div>
+    <div class="lp-contacts__grid">
+      <div class="lp-contact" data-reveal>
+        <div class="lp-contact__avatar">К</div>
+        <div class="lp-contact__info">
+          <div class="lp-contact__name">Константин</div>
+        </div>
+        <div class="lp-contact__actions">
+            <a href="tel:+79128085626" class="lp-contact__btn" aria-label="Позвонить Константину"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+            <a href="https://t.me/poluyanovjr" class="lp-contact__btn" aria-label="Telegram Константина"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 4.3 2.9 11.4c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.3c.3.8 1.3 1 1.9.4l2.5-2.4 4.6 3.4c.7.5 1.7.1 1.9-.7L23 5.6c.2-1-.7-1.8-1.5-1.3Z" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <div class="lp-contact" data-reveal style="transition-delay:90ms">
+        <div class="lp-contact__avatar">Е</div>
+        <div class="lp-contact__info">
+          <div class="lp-contact__name">Евгений</div>
+        </div>
+        <div class="lp-contact__actions">
+            <a href="tel:+79935003807" class="lp-contact__btn" aria-label="Позвонить Евгению"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+            <a href="https://t.me/semenov_e_v" class="lp-contact__btn" aria-label="Telegram Евгения"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 4.3 2.9 11.4c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.3c.3.8 1.3 1 1.9.4l2.5-2.4 4.6 3.4c.7.5 1.7.1 1.9-.7L23 5.6c.2-1-.7-1.8-1.5-1.3Z" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section class="lp-pricing" id="pricing" data-screen-label="Тарифы">
   <div class="lp__container">
@@ -504,7 +531,7 @@
 
       <div class="lp-plan" data-reveal style="transition-delay:0ms">
         <div class="lp-plan__name">Старт</div>
-        <div class="lp-plan__price">990 ₽<span class="lp-plan__price-per"> / мес</span></div>
+        <div class="lp-plan__price" style="font-size: 26px">от 3 990 ₽ / мес</div>
         <div class="lp-plan__price-sub">Для одного салона</div>
         <ul class="lp-plan__features">
           <li>Бесплатный аудит до старта</li>
@@ -514,16 +541,16 @@
           <li>Интеграция с одной CRM</li>
           <li>Email-поддержка</li>
         </ul>
-        <a href="#" class="lp-btn lp-btn--ghost">Попробовать бесплатно</a>
+        <a href="#finalcta" class="lp-btn lp-btn--ghost">Попробовать бесплатно</a>
       </div>
 
       <div class="lp-plan lp-plan--featured" data-reveal style="transition-delay:90ms">
         <span class="lp-plan__badge">Рекомендуем</span>
         <div class="lp-plan__name">Сеть</div>
-        <div class="lp-plan__price">[N] ₽<span class="lp-plan__price-per"> / мес</span></div>
+        <div class="lp-plan__price" style="font-size: 26px">от 9 990 ₽ / мес</div>
         <div class="lp-plan__price-sub">Для растущей сети</div>
         <ul class="lp-plan__features">
-          <li>До [N] салонов</li>
+          <li>До 10 салонов</li>
           <li>Безлимит сообщений</li>
           <li>Бесплатный аудит до старта</li>
           <li>Безлимит сообщений</li>
@@ -531,12 +558,12 @@
           <li>Адаптация ToV под бренд</li>
           <li>Приоритетная поддержка</li>
         </ul>
-        <a href="#" class="lp-btn lp-btn--primary">Запросить демо</a>
+        <a href="#finalcta" class="lp-btn lp-btn--primary">Попробовать беслпатно</a>
       </div>
 
       <div class="lp-plan" data-reveal style="transition-delay:180ms">
         <div class="lp-plan__name">Enterprise</div>
-        <div class="lp-plan__price">По запросу</div>
+        <div class="lp-plan__price" style="font-size: 25px">По запросу</div>
         <div class="lp-plan__price-sub">Для крупных сетей</div>
         <ul class="lp-plan__features">
           <li>Бесплатный аудит до старта</li>
@@ -546,20 +573,17 @@
           <li>SLA и расширенный мониторинг</li>
           <li>Кастомные доработки агента</li>
         </ul>
-        <a href="#" class="lp-btn lp-btn--ghost">Связаться с нами</a>
+        <a href="#finalcta" class="lp-btn lp-btn--ghost">Связаться с нами</a>
       </div>
 
     </div>
 
-    <div class="lp-pricing__trial" data-reveal>
-      <div class="lp-pricing__trial-title">Принесем пользу до первого платежа</div>
-      <div class="lp-pricing__trial-right">
-        <p class="lp-pricing__trial-text">Первые [N] дней — бесплатно. Аудит проводим до подписания: если после него вы решите не работать с&nbsp;нами, отчёт по слабым местам ваших диалогов остаётся у&nbsp;вас.</p>
-        <div class="lp-pricing__trial-cta">
-          <a href="#" class="lp-btn lp-btn--primary">Запросить демо</a>
-          <a href="#" class="lp-btn lp-btn--ghost">Получить аудит</a>
-        </div>
-      </div>
+    <div class="lp-finalcta" id="finalcta" data-reveal>
+      <h2 class="lp-finalcta__title">Не теряйте выручку<br>в&nbsp;эпоху ИИ</h2>
+      <form class="lp-finalcta__form" onsubmit="return false">
+        <input type="text" class="lp-finalcta__input" placeholder="Телефон, Telegram, почта" aria-label="Контакт">
+        <button type="submit" class="lp-finalcta__btn">Получить доступ</button>
+      </form>
     </div>
   </div>
 </section>
@@ -578,12 +602,6 @@
           <a href="#features">Возможности</a>
           <a href="#steps">Как работает</a>
           <a href="#pricing">Тарифы</a>
-        </div>
-        <div class="lp-footer__col">
-          <div class="lp-footer__col-title">Компания</div>
-          <a href="#">Кейсы</a>
-          <a href="#">О нас</a>
-          <a href="#">Блог</a>
         </div>
         <div class="lp-footer__col">
           <div class="lp-footer__col-title">Контакты</div>
@@ -609,6 +627,7 @@ const SVG = {
   mark: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15" rx="4" stroke="white" stroke-width="2"/><path d="M3.5 9.5h17" stroke="white" stroke-width="2"/><rect x="7" y="12.5" width="6" height="3.4" rx="1.5" fill="white"/></svg>',
   check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   arrow: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  plus: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
   money: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5h4.5a3.5 3.5 0 0 1 0 7H8m0 0V3m0 9v9m0-5h6M6 9h2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   clients: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h16v10H9l-4 3.5V16H4V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 11h6M9 8h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
   time: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -616,8 +635,8 @@ const SVG = {
 
 const BULLETS = [
   'Омниканально — в Telegram, Max и на сайте',
-  'Без галлюцинаций, по согласованным сценариям',
-  'Без обучения нового сотрудника каждые полгода',
+  'По согласованным сценариям',
+  'Без обучения новых сотрудников',
 ];
 
 /* channel glyphs (monochrome, inherit currentColor) */
@@ -646,7 +665,7 @@ const SCENARIOS = [
     { who: 'client', html: 'Понятно, давайте запишусь' },
     { who: 'agent', html: 'Отлично. На какой день удобно посмотреть свободное время?' },
   ]},
-  { id: 'sale', label: 'Продажа сертификата', msgs: [
+  { id: 'sale', label: 'Сертификат', msgs: [
     { who: 'client', html: 'Хочу подарить подруге сертификат на день рождения. Что посоветуете?' },
     { who: 'agent', html: 'Хорошая идея! У&nbsp;нас сертификаты на любую сумму или на конкретные программы. Подскажите, какой бюджет рассматриваете?' },
     { who: 'client', html: 'Тысяч 5–7' },
@@ -661,7 +680,7 @@ function msgHTML(m) {
   return `<div class="lp-msg lp-msg--${m.who}">${label}${m.html}</div>`;
 }
 
-const STORY_DUR = 4000; // время на одну историю, мс
+const STORY_DUR = 7000; // время на одну историю, мс
 
 function buildChat(el) {
   const tabs = SCENARIOS.map((s, i) =>
@@ -670,13 +689,28 @@ function buildChat(el) {
   const panes = SCENARIOS.map((s, i) =>
     `<div class="lp-pane${i === 0 ? ' is-active' : ''}" data-pane="${i}">${s.msgs.map(msgHTML).join('')}</div>`
   ).join('');
-  el.innerHTML = `<div class="lp-chat__tabs">${tabs}</div><div class="lp-chat__body">${panes}</div>`;
+  el.innerHTML = `<div class="lp-chat__window">`
+    +   `<div class="lp-chat__head">`
+    +     `<span class="lp-chat__avatar lp-chat__avatar--salon">Ш</span>`
+    +     `<div class="lp-chat__id"><span class="lp-chat__name">Шёлк</span>`
+    +       `<span class="lp-chat__status"><span class="lp-chat__dot"></span>онлайн</span></div>`
+    +     `<div class="lp-chat__switch">${tabs}</div>`
+    +   `</div>`
+    +   `<div class="lp-chat__body">${panes}</div>`
+    +   `<div class="lp-chat__input">`
+    +     `<button class="lp-chat__attach" type="button" aria-label="Прикрепить файл">${SVG.plus}</button>`
+    +     `<span class="lp-chat__input-field">Сообщение…</span>`
+    +     `<button class="lp-chat__send" type="button" aria-label="Отправить">${SVG.arrow}</button></div>`
+    + `</div>`;
 
-  const tabEls = [...el.querySelectorAll('.lp-chat__tab')];
+  const tabsScope = el;
+  const tabEls = [...tabsScope.querySelectorAll('.lp-chat__tab')];
   const paneEls = [...el.querySelectorAll('.lp-pane')];
-  const tabsEl = el.querySelector('.lp-chat__tabs');
+  const tabsEl = tabsScope.querySelector('.lp-chat__tabs');
+  const headEl = el.querySelector('.lp-chat__head');
+  const inputEl = el.querySelector('.lp-chat__input');
   const body = el.querySelector('.lp-chat__body');
-  let idx = 0, timer;
+  let idx = 0, timer, revealTimers = [];
 
   // Высота окна подстраивается под контент активного сценария,
   // а сам Hero не скачет: резервируем максимум через min-height на .lp-chat.
@@ -685,9 +719,9 @@ function buildChat(el) {
     paneEls.forEach(p => { max = Math.max(max, p.scrollHeight); });
     const active = paneEls[idx] || paneEls[0];
     if (active) body.style.height = active.scrollHeight + 'px';
-    const tabsH = tabsEl ? tabsEl.offsetHeight : 0;
-    const gap = 16; // gap между вкладками и окном
-    if (max) el.style.minHeight = (tabsH + gap + max) + 'px';
+    const headH = headEl ? headEl.offsetHeight : 0;
+    const inputH = inputEl ? inputEl.offsetHeight : 0;
+    if (max) el.style.minHeight = (headH + inputH + max + 2) + 'px';
   }
   // Заливка фона вкладки слева направо. Всегда стартует с нуля — поэтому
   // при перезагрузке активная вкладка не выглядит «уже прогруженной».
@@ -702,12 +736,27 @@ function buildChat(el) {
       fill.style.transform = 'scaleX(1)';
     }
   }
+  function revealMessages(pane) {
+    revealTimers.forEach(clearTimeout); revealTimers = [];
+    if (!pane) return;
+    const msgs = [...pane.querySelectorAll('.lp-msg')];
+    // сначала мгновенно прячем все сообщения (без анимации)
+    msgs.forEach(m => { m.style.transition = 'none'; m.classList.remove('is-in'); });
+    void pane.offsetWidth; // reflow — фиксируем скрытое состояние
+    msgs.forEach(m => { m.style.transition = ''; });
+    // равномерно распределяем появления по длительности истории
+    const step = STORY_DUR / (msgs.length + 0.6);
+    msgs.forEach((m, i) => {
+      revealTimers.push(setTimeout(() => m.classList.add('is-in'), Math.round(i * step)));
+    });
+  }
   function show(n) {
     idx = n;
     tabEls.forEach((t, i) => t.classList.toggle('is-active', i === n));
     paneEls.forEach((p, i) => p.classList.toggle('is-active', i === n));
     tabEls.forEach((t, i) => setFill(t, i === n));
     fit();
+    revealMessages(paneEls[n]);
   }
   function loop() { timer = setTimeout(() => { show((idx + 1) % SCENARIOS.length); loop(); }, STORY_DUR); }
   tabEls.forEach((t, i) => t.addEventListener('click', () => { clearTimeout(timer); show(i); loop(); }));
@@ -721,16 +770,40 @@ function buildChat(el) {
 document.querySelectorAll('[data-mark]').forEach(m => m.innerHTML = SVG.mark);
 document.querySelectorAll('[data-check]').forEach(c => c.innerHTML = SVG.check);
 document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = SVG.arrow);
-const b = document.querySelector('[data-channels]');
-if (b) b.innerHTML = CHANNELS.map(c => `<li class="lp-channel"><span class="lp-channel__ico">${c.svg}</span>${c.name}</li>`).join('');
+const CALC_ICO = { money: SVG.money, clients: SVG.clients, time: SVG.time };
+document.querySelectorAll('[data-ico]').forEach(s => { s.innerHTML = CALC_ICO[s.dataset.ico] || ''; });
+const b = document.querySelector('[data-channels-inline]');
+if (b) b.innerHTML = CHANNELS.map(c => `<span class="lp-sub__ch" title="${c.name}">${c.svg}</span>`).join('');
 const chat = document.querySelector('[data-chat]');
 if (chat) buildChat(chat);
+
+/* ---------- ротация слов в заголовке (кросс-фейд) ---------- */
+(function () {
+  const r = document.querySelector('[data-rotate]');
+  if (!r) return;
+  const words = [...r.querySelectorAll('.lp-rotate__word')];
+  if (words.length < 2) return;
+  let i = 0;
+  function tick() {
+    const prev = words[i];
+    prev.classList.remove('is-active');
+    prev.classList.add('is-out');
+    setTimeout(function () { prev.classList.remove('is-out'); }, 560);
+    i = (i + 1) % words.length;
+    words[i].classList.add('is-active');
+  }
+  setInterval(tick, 2000);
+})();
 
 /* ---------- features: чаты из сценариев ---------- */
 const FEATURE_ORDER = [1, 0, 2]; // консультация / запись / сертификат
 const fMedia = document.querySelector('[data-feature-chats]');
 if (fMedia) fMedia.innerHTML = FEATURE_ORDER.map((si, i) =>
-  `<div class="lp-feature__chat ${i === 0 ? 'is-active' : 'is-next'}" data-fchat="${i}"><div class="lp-chatcard">${SCENARIOS[si].msgs.map(msgHTML).join('')}</div></div>`
+  `<div class="lp-feature__chat ${i === 0 ? 'is-active' : 'is-next'}" data-fchat="${i}"><div class="lp-chatcard">`
+  + `<div class="lp-chatcard__head"><span class="lp-chatcard__avatar">${SVG.mark}</span><div class="lp-chatcard__id"><span class="lp-chatcard__name">Слот</span><span class="lp-chatcard__status"><span class="lp-chatcard__dot"></span>онлайн</span></div></div>`
+  + `<div class="lp-chatcard__body">${SCENARIOS[si].msgs.map(msgHTML).join('')}</div>`
+  + `<div class="lp-chatcard__input"><button class="lp-chatcard__btn" type="button" aria-label="Прикрепить">${SVG.plus}</button><span class="lp-chatcard__field">Сообщение…</span><button class="lp-chatcard__btn lp-chatcard__btn--send" type="button" aria-label="Отправить">${SVG.arrow}</button></div>`
+  + `</div></div>`
 ).join('');
 
 /* ---------- adv: пульсирующие линии-связи к центральному чату ---------- */
@@ -925,6 +998,35 @@ if (fMedia) fMedia.innerHTML = FEATURE_ORDER.map((si, i) =>
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
   check();
+})();
+
+/* ---------- плавный инерционный скролл ---------- */
+(function () {
+  return; // отключено — родной скролл
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = window.matchMedia('(pointer: coarse)').matches;
+  if (reduce || coarse) return; // на тачах и при reduced-motion — родной скролл
+  let target = window.scrollY, current = target, active = false;
+  const ease = 0.22; // еле заметное сглаживание
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+  const clamp = v => Math.max(0, Math.min(v, maxScroll()));
+  function loop() {
+    current += (target - current) * ease;
+    if (Math.abs(target - current) < 0.4) {
+      current = target; window.scrollTo(0, current); active = false; return;
+    }
+    window.scrollTo(0, current);
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) return; // pinch-zoom
+    e.preventDefault();
+    const dy = e.deltaMode === 1 ? e.deltaY * 16 : (e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY);
+    target = clamp(target + dy);
+    if (!active) { active = true; current = window.scrollY; requestAnimationFrame(loop); }
+  }, { passive: false });
+  window.addEventListener('scroll', function () { if (!active) target = window.scrollY; }, { passive: true });
+  window.addEventListener('resize', function () { target = clamp(target); }, { passive: true });
 })();
 </script>
 </body>
