@@ -168,19 +168,16 @@ body {
   font-size: 20px; line-height: 1.5; color: var(--sub-fg);
   font-weight: 450; letter-spacing: -0.01em; max-width: 490px;
 }
-.lp-rotate { position: relative; display: inline-block; }
-.lp-rotate__sizer { visibility: hidden; }
-.lp-rotate__word {
-  position: absolute; left: 0; top: 0; white-space: nowrap;
-  color: inherit;
-  opacity: 0; transform: translate3d(0, 0.5em, 0);
-  transition: opacity .5s cubic-bezier(.2, .7, .2, 1), transform .5s cubic-bezier(.2, .7, .2, 1);
-  will-change: transform, opacity;
+.lp-rotate { position: relative; display: inline-block; white-space: nowrap; }
+.lp-rotate__text { color: inherit; }
+.lp-rotate__cursor {
+  display: inline-block; width: 3px; height: 0.82em; margin-left: 3px;
+  background: currentColor; transform: translateY(0.08em);
+  animation: lp-rotate-blink 1s step-end infinite;
 }
-.lp-rotate__word.is-active { opacity: 1; transform: translate3d(0, 0, 0); }
-.lp-rotate__word.is-out { opacity: 0; transform: translate3d(0, -0.5em, 0); }
+@keyframes lp-rotate-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
-  .lp-rotate__word { transition: none; }
+  .lp-rotate__cursor { animation: none; }
 }
 .lp-channels { display: flex; flex-direction: column; gap: 11px; }
 .lp-channels__label {

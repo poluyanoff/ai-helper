@@ -49,7 +49,7 @@
 
       <div class="lp-hero__copy" style="gap: 25px">
         <div class="lp-hero__heading" data-reveal style="display: flex; flex-direction: column; gap: 24px">
-          <h1 class="lp-h1" style="line-height: 1.2">ИИ-агент для&nbsp;<span class="lp-rotate" data-rotate><span class="lp-rotate__sizer" aria-hidden="true">записи на&nbsp;услуги</span><span class="lp-rotate__word is-active">продаж</span><span class="lp-rotate__word">консультаций</span><span class="lp-rotate__word">записи на&nbsp;услуги</span></span></h1>
+          <h1 class="lp-h1" style="line-height: 1.2">ИИ-агент для<br><span class="lp-rotate" data-rotate><span class="lp-rotate__text" data-rotate-text>продаж</span><span class="lp-rotate__cursor" aria-hidden="true"></span></span></h1>
           <p class="lp-sub" style="margin: 0px">— Омниканально <span class="lp-sub__channels" data-channels-inline></span><br>— По согласованным сценариям <br>— Перед внедрением проводим <a href="#audit" class="lp-sub__audit" style="color: #2b54ff">бесплатный аудит</a></p>
         </div>
         <div class="lp-cta-block" data-reveal style="transition-delay: 210ms; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin: 20px 0px 0px">
@@ -291,7 +291,7 @@
 <section class="lp-steps" id="steps" data-screen-label="Запустим за 4 недели">
   <div class="lp__container">
     <div class="lp-section-head" data-reveal>
-      <h2 class="lp-h2">Запустим за&nbsp;3 дня и останемся рядом</h2>
+      <h2 class="lp-h2">Запустим и останемся рядом</h2>
     </div>
     <div class="lp-process">
       <div class="lp-process__step" data-reveal style="transition-delay:0ms">
@@ -777,22 +777,52 @@ if (b) b.innerHTML = CHANNELS.map(c => `<span class="lp-sub__ch" title="${c.name
 const chat = document.querySelector('[data-chat]');
 if (chat) buildChat(chat);
 
-/* ---------- ротация слов в заголовке (кросс-фейд) ---------- */
+/* ---------- ротация слов в заголовке (печатная машинка) ---------- */
 (function () {
   const r = document.querySelector('[data-rotate]');
   if (!r) return;
-  const words = [...r.querySelectorAll('.lp-rotate__word')];
-  if (words.length < 2) return;
-  let i = 0;
-  function tick() {
-    const prev = words[i];
-    prev.classList.remove('is-active');
-    prev.classList.add('is-out');
-    setTimeout(function () { prev.classList.remove('is-out'); }, 560);
-    i = (i + 1) % words.length;
-    words[i].classList.add('is-active');
+  const textEl = r.querySelector('[data-rotate-text]');
+  if (!textEl) return;
+  const words = ['продаж', 'консультаций', 'записи на услуги'];
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    textEl.textContent = words[0];
+    return;
   }
-  setInterval(tick, 2000);
+
+  const TYPE_SPEED = 55;
+  const DELETE_SPEED = 32;
+  const PAUSE_FULL = 1600;
+  const PAUSE_EMPTY = 300;
+
+  let wordIndex = 0;
+  let charIndex = 0;
+
+  function type() {
+    const word = words[wordIndex];
+    charIndex++;
+    textEl.textContent = word.slice(0, charIndex);
+    if (charIndex < word.length) {
+      setTimeout(type, TYPE_SPEED);
+    } else {
+      setTimeout(erase, PAUSE_FULL);
+    }
+  }
+
+  function erase() {
+    const word = words[wordIndex];
+    charIndex--;
+    textEl.textContent = word.slice(0, charIndex);
+    if (charIndex > 0) {
+      setTimeout(erase, DELETE_SPEED);
+    } else {
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(type, PAUSE_EMPTY);
+    }
+  }
+
+  textEl.textContent = '';
+  setTimeout(type, TYPE_SPEED);
 })();
 
 /* ---------- features: чаты из сценариев ---------- */
