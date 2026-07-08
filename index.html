@@ -3,13 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Слот — ИИ-агент для салонов красоты</title>
+<title>Слот - ИИ-бот для Wellness</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Onest:wght@400;450;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/studio.css?v=48">
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="logo-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1C57FE"/><stop offset="100%" stop-color="#5490FA"/></linearGradient></defs></svg>
 
 <template id="__bundler_thumbnail" data-bg-color="#f4f6f9">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +30,7 @@
 <!-- NAV -->
 <nav class="lp-nav">
   <a class="lp-brand" href="#">
-    <span class="lp-brand__mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 5h15A1.5 1.5 0 0 1 21 6.5v8A1.5 1.5 0 0 1 19.5 16H10l-4.1 3.2A.6.6 0 0 1 5 18.7V6.5A1.5 1.5 0 0 1 6.5 5Z" fill="#fff"/></svg></span>
+    <span class="lp-brand__mark"><svg width="34" height="34" viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="627" cy="627" r="627" fill="url(#logo-grad)"/><g transform="translate(0.000000,1254.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none"><path d="M5955 9563 c-155 -14 -404 -74 -562 -134 -601 -228 -1098 -705 -1348 -1293 -183 -433 -226 -888 -123 -1336 66 -292 247 -669 426 -889 80 -99 200 -146 347 -139 81 4 103 10 181 46 49 22 289 128 534 235 753 330 2111 926 2775 1219 99 44 223 98 275 120 52 22 119 56 149 76 69 46 135 136 161 219 19 63 20 92 20 872 0 789 -1 807 -21 851 -25 55 -71 105 -124 133 -40 22 -40 22 -1345 23 -718 0 -1323 -1 -1345 -3z"/><path d="M7790 6463 c-96 -15 -78 -7 -1560 -680 -272 -124 -781 -356 -1130 -515 -349 -159 -705 -321 -790 -360 -321 -146 -334 -153 -388 -212 -29 -32 -61 -81 -74 -114 -23 -57 -23 -57 -23 -852 0 -795 0 -795 22 -835 28 -52 68 -89 123 -114 45 -20 59 -21 1335 -21 1220 0 1297 1 1420 19 610 90 1134 428 1499 969 169 249 290 556 351 887 26 136 31 479 11 626 -52 372 -186 705 -401 999 -68 92 -101 123 -174 159 -39 20 -161 52 -186 49 -5 0 -21 -2 -35 -5z"/></g></svg></span>
     <span class="lp-brand__name">СЛОТ</span>
   </a>
   <ul class="lp-nav__links">
@@ -113,7 +116,7 @@
           <li><span class="lp-audit__check" data-check></span>На каких вопросах администраторы теряют клиентов чаще всего</li>
           <li><span class="lp-audit__check" data-check></span>Какие услуги недопродаются из-за слабых ответов в&nbsp;переписке</li>
           <li><span class="lp-audit__check" data-check></span>Сколько заявок остаётся без ответа дольше 10&nbsp;минут и&nbsp;в&nbsp;какое время</li>
-          <li><span class="lp-audit__check" data-check></span>Где сценарии записи ломаются — на филиале, мастере, времени или цене</li>
+          <li><span class="lp-audit__check" data-check></span>На каком шаге клиенты чаще всего передумывают записываться — не устроил филиал, мастер, время или цена</li>
           <li><span class="lp-audit__check" data-check></span>Какие возражения повторяются и&nbsp;как сейчас на них отвечают</li>
           <li><span class="lp-audit__check" data-check></span>Что говорят клиенты, которые решают не&nbsp;записываться</li>
         </ul>
@@ -147,10 +150,10 @@
               <div class="lp-feature__card is-active" data-fcard="0">
                 <div class="lp-feature__num">01</div>
                 <div class="lp-feature__title">Расскажет об&nbsp;услугах</div>
-                <p class="lp-feature__text">Знает прайс, состав процедур, противопоказания, мастеров и&nbsp;расписание. Отвечает так, как ответил бы лучший администратор сети.</p>
+                <p class="lp-feature__text">Знает прайс, состав процедур, противопоказания, мастеров и&nbsp;расписание.</p>
                 <div class="lp-feature__tags">
                   <span class="lp-feature__tag">Обучен только на ваших данных</span>
-                  <span class="lp-feature__tag">без галлюцинаций</span>
+                  <span class="lp-feature__tag">Без галлюцинаций</span>
                 </div>
               </div>
 
@@ -193,7 +196,7 @@
           <div class="lp-advcard__label">Канал обращения</div>
           <div class="lp-advcard__channels">
             <span class="lp-advcard__channel is-active">Telegram</span>
-            <span class="lp-advcard__channel">Max</span>
+            <span class="lp-advcard__channel">MAX</span>
             <span class="lp-advcard__channel">Avito</span>
             <span class="lp-advcard__channel">ВКонтакте</span>
             <span class="lp-advcard__channel">Сайт</span>
@@ -272,11 +275,11 @@
 
     <div class="lp-adv__blocks">
       <div class="lp-adv__block" data-reveal style="transition-delay:0ms">
-        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="2"/><path d="M6 6a8.5 8.5 0 0 0 0 12M18 6a8.5 8.5 0 0 1 0 12M8.6 8.6a5 5 0 0 0 0 6.8M15.4 8.6a5 5 0 0 1 0 6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><h3 class="lp-adv__block-title">Работает омниканально</h3></div>
-        <p class="lp-adv__block-text">Telegram, Max, Avito, ВКонтакте, виджет на сайте, отдельная страница-чат. Один агент, одна база знаний, единые сценарии.</p>
+        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="6" r="2.5" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="18" r="2.5" stroke="currentColor" stroke-width="2"/><path d="M8.2 10.8 14.8 7.2M8.2 13.2 14.8 16.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><h3 class="lp-adv__block-title">Работает омниканально</h3></div>
+        <p class="lp-adv__block-text">Telegram, MAX, Avito, ВКонтакте, виджет на сайте, отдельная страница-чат. Один агент, одна база знаний, единые сценарии.</p>
       </div>
       <div class="lp-adv__block" data-reveal style="transition-delay:90ms">
-        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 5h15A1.5 1.5 0 0 1 21 6.5v8A1.5 1.5 0 0 1 19.5 16H10l-4.1 3.2A.6.6 0 0 1 5 18.7V6.5A1.5 1.5 0 0 1 6.5 5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9.5v3M12 8v6M15 10v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><h3 class="lp-adv__block-title">Говорит голосом вашего бренда</h3></div>
+        <div class="lp-adv__block-head"><span class="lp-adv__block-num"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.5a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0v-6a3 3 0 0 0-3-3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6.5 11a5.5 5.5 0 0 0 11 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 16.5v3.5M9 20h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><h3 class="lp-adv__block-title">Говорит голосом вашего бренда</h3></div>
         <p class="lp-adv__block-text">Настройка tone of voice под бренд: премиальный салон и&nbsp;сеть эконом-сегмента говорят по-разному. Мы заранее настраиваем это.</p>
       </div>
       <div class="lp-adv__block" data-reveal style="transition-delay:180ms">
@@ -323,7 +326,7 @@
   <div class="lp__container">
     <div class="lp-calc__header" data-reveal>
       <h2 class="lp-h2">Посчитайте эффект сами</h2>
-      <p class="lp-calc__intro">Рассчитайте экономику под параметры вашего бизнеса. Это оценка по средним показателям индустрии; точные цифры по вашей сети дадим после аудита.</p>
+      <p class="lp-calc__intro">Рассчитайте экономику под параметры вашего бизнеса. Это оценка по средним показателям индустрии.</p>
     </div>
 
     <div class="lp-calc__card" data-reveal>
@@ -361,10 +364,10 @@
       </div>
 
       <div class="lp-calc__results">
-        <div class="lp-calc__results-label">Что это даёт сети</div>
+        <div class="lp-calc__results-label">Ожидаемый эффект</div>
         <div class="lp-calc__lines">
           <div class="lp-calc__line">
-            <span class="lp-calc__line-ico" data-ico="money"></span>
+            <span class="lp-calc__line-ico" data-ico="freed"></span>
             <span class="lp-calc__line-label">Высвобождение времени на переписку<span class="lp-tip">?<span class="lp-tip__text">Экономия учитывает только долю рабочего времени администратора, которая уходит на текстовые каналы — сам администратор остаётся в зале. По оценке индустрии это около 30% его рабочего времени.</span></span></span>
             <span class="lp-calc__line-value" id="v-fot">60 000 ₽</span>
           </div>
@@ -403,13 +406,13 @@
       <div class="lp-quality__item" data-reveal>
         <div class="lp-quality__ico"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="lp-quality__title">Контроль над&nbsp;ИИ</div>
-        <p class="lp-quality__text">Агент не выдумывает и&nbsp;не галлюцинирует — его поведение <mark>строго подчинено регламентам</mark>, которые мы прописываем с&nbsp;вами на этапе подготовки. В&nbsp;сложных и&nbsp;нестандартных ситуациях агент сам передаёт диалог администратору или собственнику.</p>
+        <p class="lp-quality__text">Агент не выдумывает и&nbsp;не галлюцинирует — его поведение <mark>строго подчинено регламентам</mark>, которые мы прописываем с&nbsp;вами на этапе подготовки.</p>
       </div>
       <div class="lp-quality__divider"></div>
       <div class="lp-quality__item" data-reveal style="transition-delay:120ms">
         <div class="lp-quality__ico"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c0-3 2.6-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16 5.6a3 3 0 0 1 0 5.8M17.5 14.2c2.3.5 3.9 2.3 3.9 4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
         <div class="lp-quality__title">Команда</div>
-        <p class="lp-quality__text">За продуктом стоят <mark>лид-специалисты из крупных российских бигтехов</mark> — те, кто строил рекомендательные системы, поисковые сервисы и&nbsp;продуктовые ИИ-команды. Архитектура, тестирование и&nbsp;контроль качества — на уровне enterprise.</p>
+        <p class="lp-quality__text">За продуктом стоят <mark>лид-специалисты из российских бигтехов</mark> — те, кто строил рекомендательные системы, поисковые сервисы и&nbsp;продуктовые ИИ-команды. Архитектура, тестирование и&nbsp;контроль качества — на уровне enterprise.</p>
       </div>
     </div>
   </div>
@@ -428,22 +431,7 @@
       <div class="lp-faq__list" data-reveal style="transition-delay:120ms">
 
         <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>А он не заменит моих администраторов?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Нет. Горячие, нестандартные и эмоциональные обращения агент сам переводит на живого сотрудника. Мы не вытесняем команду — мы снимаем с неё рутину, чтобы администраторы занимались тем, ради чего вы их нанимали: работой с клиентом в зале и допродажами.</div>
-        </details>
-
-        <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>А если он напишет ерунду?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Агент работает строго по согласованной базе знаний и сценариям. За её пределами он не выдумывает: говорит «уточню у администратора» и передаёт диалог. Цены, скидки, медицинские утверждения захардкожены и не могут быть нарушены.</div>
-        </details>
-
-        <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>А первые недели не страшно его отпускать?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Не отпускаете. До перехода в автономный режим вы видите, как агент отвечает, и можете править формулировки. Автономным он становится только там, где вы сами не находите, что исправлять.</div>
-        </details>
-
-        <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>А персональные данные?</span><span class="lp-faq-item__icon"></span></summary>
+          <summary class="lp-faq-item__summary"><span>Как обеспечивается защита персональных данных?</span><span class="lp-faq-item__icon"></span></summary>
           <div class="lp-faq-item__body">Работаем в соответствии с 152-ФЗ. Данные клиентов хранятся на российских серверах, передача шифруется, доступ ограничен. По запросу предоставляем полный пакет документов для вашего DPO.</div>
         </details>
 
@@ -453,33 +441,18 @@
         </details>
 
         <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>Что вы от нас хотите для старта?</span><span class="lp-faq-item__icon"></span></summary>
+          <summary class="lp-faq-item__summary"><span>Что необходимо для старта?</span><span class="lp-faq-item__icon"></span></summary>
           <div class="lp-faq-item__body">Доступ к записям диалогов администраторов для аудита, материалы по услугам и прайсу, утверждение финальных сценариев. Дальше работаем мы.</div>
         </details>
 
         <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>А если у нас уже стоит Jivo, Smartbot или другой бот?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Чаще всего меняем без боли — заберём то, что вы туда уже занесли, добьём аудитом и перезапустим. Параллельная работа на тестовом канале — тоже возможна.</div>
-        </details>
-
-        <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>Моей CRM нет в вашем списке</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">У нас несколько нативных интеграций. Если вашей нет, но у неё есть открытый API — подключим за 5–10 дней без доплаты на годовом контракте. Если API нет — агент будет отправлять администратору готовую карточку клиента для ручного заведения.</div>
-        </details>
-
-        <details class="lp-faq-item">
           <summary class="lp-faq-item__summary"><span>В каких каналах работает агент?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Telegram, Max, виджет на сайте, отдельная страница-чат по ссылке. По WhatsApp — уточняйте у менеджера: подключаем по запросу.</div>
+          <div class="lp-faq-item__body">Telegram, MAX, виджет на сайте, отдельная страница-чат по ссылке. По WhatsApp — уточняйте у менеджера: подключаем по запросу.</div>
         </details>
 
         <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>Можно посмотреть, как он работает у других?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Да, на демо покажем живые диалоги (с согласия клиентов) и расскажем кейсы по сегментам — премиум-сети, эконом и отдельные wellness-направления.</div>
-        </details>
-
-        <details class="lp-faq-item">
-          <summary class="lp-faq-item__summary"><span>А если я хочу что-то изменить после запуска?</span><span class="lp-faq-item__icon"></span></summary>
-          <div class="lp-faq-item__body">Любые правки в сценарии и базе знаний — без доплат на любом тарифе. Это часть сопровождения, а не «ещё одни консультационные часы».</div>
+          <summary class="lp-faq-item__summary"><span>Можно ли внести изменения после запуска?</span><span class="lp-faq-item__icon"></span></summary>
+          <div class="lp-faq-item__body">Да, любые правки в сценарии и базе знаний возможны на любом тарифе, но оплачиваются отдельно.</div>
         </details>
 
       </div>
@@ -496,7 +469,7 @@
     </div>
     <div class="lp-contacts__grid">
       <div class="lp-contact" data-reveal>
-        <div class="lp-contact__avatar">К</div>
+        <div class="lp-contact__avatar"><img src="images/konstantin.jpg" alt="Константин"></div>
         <div class="lp-contact__info">
           <div class="lp-contact__name">Константин</div>
         </div>
@@ -506,7 +479,7 @@
         </div>
       </div>
       <div class="lp-contact" data-reveal style="transition-delay:90ms">
-        <div class="lp-contact__avatar">Е</div>
+        <div class="lp-contact__avatar"><img src="images/evgeniy.jpg" alt="Евгений"></div>
         <div class="lp-contact__info">
           <div class="lp-contact__name">Евгений</div>
         </div>
@@ -524,7 +497,7 @@
   <div class="lp__container">
     <div class="lp-pricing__header" data-reveal>
       <h2 class="lp-h2">Готовы попробовать?</h2>
-      <p class="lp-pricing__sub">Один тариф для старта, два — для растущей сети. Без скрытых платежей и&nbsp;без оплаты за интеграции.</p>
+      <p class="lp-pricing__sub">Есть тарифы под любые потребности — от одного салона до крупной сети.</p>
     </div>
 
     <div class="lp-pricing__grid">
@@ -535,8 +508,8 @@
         <div class="lp-plan__price-sub">Для одного салона</div>
         <ul class="lp-plan__features">
           <li>Бесплатный аудит до старта</li>
-          <li>1 салон, до [N] сообщений в месяц</li>
-          <li>Все каналы: Telegram, Max, сайт</li>
+          <li>1 салон</li>
+          <li>Все каналы: Telegram, MAX, сайт</li>
           <li>Базовые сценарии: запись, FAQ, прайс</li>
           <li>Интеграция с одной CRM</li>
           <li>Email-поддержка</li>
@@ -550,10 +523,8 @@
         <div class="lp-plan__price" style="font-size: 26px">от 9 990 ₽ / мес</div>
         <div class="lp-plan__price-sub">Для растущей сети</div>
         <ul class="lp-plan__features">
-          <li>До 10 салонов</li>
-          <li>Безлимит сообщений</li>
           <li>Бесплатный аудит до старта</li>
-          <li>Безлимит сообщений</li>
+          <li>До 10 салонов</li>
           <li>Кастомные сценарии: сертификаты, допродажи, возврат «спящих»</li>
           <li>Адаптация ToV под бренд</li>
           <li>Приоритетная поддержка</li>
@@ -594,7 +565,7 @@
     <div class="lp-footer__top">
       <div class="lp-footer__brand">
         <span class="lp-footer__name">СЛОТ</span>
-        <p class="lp-footer__tagline">ИИ-агент для салонов красоты: отвечает клиентам, записывает и&nbsp;продаёт за вас.</p>
+        <p class="lp-footer__tagline">ИИ агент для wellness: отвечает клиентам, записывает и&nbsp;продаёт за вас.</p>
       </div>
       <nav class="lp-footer__cols">
         <div class="lp-footer__col">
@@ -605,7 +576,6 @@
         </div>
         <div class="lp-footer__col">
           <div class="lp-footer__col-title">Контакты</div>
-          <a href="mailto:hello@slot.ru">hello@slot.ru</a>
           <a href="#">Telegram</a>
           <a href="#">Заказать звонок</a>
         </div>
@@ -614,8 +584,7 @@
     <div class="lp-footer__bottom">
       <span>© 2026 Слот. Все права защищены.</span>
       <div class="lp-footer__legal">
-        <a href="#">Политика конфиденциальности</a>
-        <a href="#">Обработка персональных данных</a>
+        <a href="#">Политика обработки персональных данных</a>
       </div>
     </div>
   </div>
@@ -624,27 +593,27 @@
 <script>
 /* ---------- inline SVG ---------- */
 const SVG = {
-  mark: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15" rx="4" stroke="white" stroke-width="2"/><path d="M3.5 9.5h17" stroke="white" stroke-width="2"/><rect x="7" y="12.5" width="6" height="3.4" rx="1.5" fill="white"/></svg>',
+  mark: '<svg viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg"><circle cx="627" cy="627" r="627" fill="url(#logo-grad)"/><g transform="translate(0.000000,1254.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none"><path d="M5955 9563 c-155 -14 -404 -74 -562 -134 -601 -228 -1098 -705 -1348 -1293 -183 -433 -226 -888 -123 -1336 66 -292 247 -669 426 -889 80 -99 200 -146 347 -139 81 4 103 10 181 46 49 22 289 128 534 235 753 330 2111 926 2775 1219 99 44 223 98 275 120 52 22 119 56 149 76 69 46 135 136 161 219 19 63 20 92 20 872 0 789 -1 807 -21 851 -25 55 -71 105 -124 133 -40 22 -40 22 -1345 23 -718 0 -1323 -1 -1345 -3z"/><path d="M7790 6463 c-96 -15 -78 -7 -1560 -680 -272 -124 -781 -356 -1130 -515 -349 -159 -705 -321 -790 -360 -321 -146 -334 -153 -388 -212 -29 -32 -61 -81 -74 -114 -23 -57 -23 -57 -23 -852 0 -795 0 -795 22 -835 28 -52 68 -89 123 -114 45 -20 59 -21 1335 -21 1220 0 1297 1 1420 19 610 90 1134 428 1499 969 169 249 290 556 351 887 26 136 31 479 11 626 -52 372 -186 705 -401 999 -68 92 -101 123 -174 159 -39 20 -161 52 -186 49 -5 0 -21 -2 -35 -5z"/></g></svg>',
   check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   arrow: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   plus: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
-  money: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5h4.5a3.5 3.5 0 0 1 0 7H8m0 0V3m0 9v9m0-5h6M6 9h2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  clients: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h16v10H9l-4 3.5V16H4V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 11h6M9 8h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  freed: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 3.5h10M7 20.5h10M7.5 3.5c0 4 3 5.5 4.5 6.5-1.5 1-4.5 2.5-4.5 6.5M16.5 3.5c0 4-3 5.5-4.5 6.5 1.5 1 4.5 2.5 4.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  clients: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 2.5 21 6.5 17 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12V10a4 4 0 0 1 4-4h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 21.5 3 17.5 7 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v2a4 4 0 0 1-4 4H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   time: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 };
 
 const BULLETS = [
-  'Омниканально — в Telegram, Max и на сайте',
+  'Омниканально — в Telegram, MAX и на сайте',
   'По согласованным сценариям',
   'Без обучения новых сотрудников',
 ];
 
 /* channel glyphs (monochrome, inherit currentColor) */
 const CHANNELS = [
-  { name: 'Telegram', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21.5 4.3 2.9 11.4c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.3c.3.8 1.3 1 1.9.4l2.5-2.4 4.6 3.4c.7.5 1.7.1 1.9-.7L23 5.6c.2-1-.7-1.8-1.5-1.3Z" fill="currentColor"/><path d="m8 14.5 9-6-6.7 7" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/></svg>' },
-  { name: 'Max', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 19V5l8 8 8-8v14" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
-  { name: 'Сайт', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17" stroke="currentColor" stroke-width="2"/></svg>' },
-  { name: 'Авито', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="7.5" r="3" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="16" r="4" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="6.5" r="2" fill="currentColor"/><circle cx="6.5" cy="17" r="2.5" stroke="currentColor" stroke-width="2"/></svg>' },
+  { name: 'Telegram', svg: '<svg width="20" height="20" viewBox="0 0 100 100" fill="none"><g clip-path="url(#tgclip)"><path d="M50.0208 100.042C77.6466 100.042 100.042 77.6466 100.042 50.0208C100.042 22.3951 77.6466 0 50.0208 0C22.3951 0 0 22.3951 0 50.0208C0 77.6466 22.3951 100.042 50.0208 100.042Z" fill="url(#tggrad)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.6154 49.4794C37.1927 43.1487 46.897 38.9421 51.7699 36.9013C65.6391 31.112 68.5546 30.1125 70.4288 30.0708C70.8453 30.0708 71.7616 30.1541 72.3863 30.6539C72.8861 31.0704 73.0111 31.6118 73.0944 32.0283C73.1777 32.4448 73.261 33.3194 73.1777 33.9858C72.428 41.8992 69.1793 61.0995 67.5134 69.9292C66.8053 73.6776 65.4309 74.9271 64.0981 75.0521C61.1827 75.302 58.9753 73.1362 56.1848 71.3036C51.7699 68.4298 49.3126 66.6389 45.0227 63.8067C40.0665 60.5581 43.2735 58.7672 46.1056 55.8517C46.8553 55.102 59.6416 43.4402 59.8915 42.399C59.9332 42.2741 59.9332 41.7743 59.6416 41.5244C59.3501 41.2745 58.9336 41.3578 58.6004 41.4411C58.1423 41.5244 51.1452 46.1891 37.5259 55.3936C35.5267 56.768 33.7358 57.4344 32.1115 57.3928C30.3205 57.3511 26.9053 56.3932 24.323 55.5602C21.1993 54.5606 18.7004 54.0192 18.9086 52.2699C19.0336 51.3536 20.283 50.4373 22.6154 49.4794Z" fill="#fff"/></g><defs><linearGradient id="tggrad" x1="49.9792" y1="0" x2="49.9792" y2="99.2503" gradientUnits="userSpaceOnUse"><stop stop-color="#2AABEE"/><stop offset="1" stop-color="#229ED9"/></linearGradient><clipPath id="tgclip"><rect width="100" height="100" fill="#fff"/></clipPath></defs></svg>' },
+  { name: 'MAX', svg: '<svg width="20" height="20" viewBox="0 0 100 100" fill="none"><g clip-path="url(#maxclip)"><path d="M75.0319 0H24.9681C11.1786 0 0 11.1786 0 24.9681V75.0319C0 88.8214 11.1786 100 24.9681 100H75.0319C88.8214 100 100 88.8214 100 75.0319V24.9681C100 11.1786 88.8214 0 75.0319 0Z" fill="url(#maxgrad0)"/><path d="M75.0319 0H24.9681C11.1786 0 0 11.1786 0 24.9681V75.0319C0 88.8214 11.1786 100 24.9681 100H75.0319C88.8214 100 100 88.8214 100 75.0319V24.9681C100 11.1786 88.8214 0 75.0319 0Z" fill="url(#maxgrad1)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M50.8216 87.833C43.3209 87.833 39.8352 86.738 33.7763 82.358C29.9438 87.2855 17.8077 91.1363 17.2784 84.548C17.2784 79.6024 16.1834 75.4232 14.9424 70.8607C13.4642 65.2397 11.7852 58.98 11.7852 49.9099C11.7852 28.2473 29.5606 11.9502 50.6209 11.9502C71.6994 11.9502 88.2156 29.0503 88.2156 50.1106C88.2863 70.8452 71.5561 87.7224 50.8216 87.833ZM51.1319 30.6745C40.8755 30.1453 32.882 37.2445 31.1118 48.3769C29.6518 57.5931 32.2433 68.8167 34.4515 69.4007C35.51 69.6562 38.1745 67.5027 39.8352 65.842C42.5813 67.7391 45.7791 68.8785 49.1062 69.1452C59.7335 69.6564 68.8142 61.5658 69.5277 50.9502C69.9431 40.312 61.7607 31.3016 51.1319 30.6928V30.6745Z" fill="#fff"/></g><defs><linearGradient id="maxgrad0" x1="11.7847" y1="76.0536" x2="100" y2="50" gradientUnits="userSpaceOnUse"><stop stop-color="#44CCFF"/><stop offset="0.662" stop-color="#5533EE"/><stop offset="1" stop-color="#9933DD"/></linearGradient><radialGradient id="maxgrad1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(-2.37908 -43.9185) rotate(51.356) scale(121.352 50)"><stop stop-color="#0000FF"/><stop offset="1" stop-opacity="0"/></radialGradient><clipPath id="maxclip"><rect width="100" height="100" fill="#fff"/></clipPath></defs></svg>' },
+  { name: 'Авито', svg: '<svg width="20" height="20" viewBox="0 0 108 100" fill="none"><g clip-path="url(#avitoclip)"><path d="M32.3912 99.9393C50.2209 99.9393 64.675 85.4993 64.675 67.6869C64.675 49.8743 50.2209 35.4346 32.3912 35.4346C14.5614 35.4346 0.107422 49.8743 0.107422 67.6869C0.107422 85.4993 14.5614 99.9393 32.3912 99.9393Z" fill="#04E061"/><path d="M88.3947 95.8692C99.1686 95.8692 107.902 87.1437 107.902 76.3803C107.902 65.6169 99.1686 56.8916 88.3947 56.8916C77.6208 56.8916 68.8867 65.6169 68.8867 76.3803C68.8867 87.1437 77.6208 95.8692 88.3947 95.8692Z" fill="#FF4053"/><path d="M38.5659 31.2301C45.2332 31.2301 50.6379 25.8306 50.6379 19.17C50.6379 12.5094 45.2332 7.10986 38.5659 7.10986C31.8989 7.10986 26.4941 12.5094 26.4941 19.17C26.4941 25.8306 31.8989 31.2301 38.5659 31.2301Z" fill="#965EEB"/><path d="M80.8163 52.6831C95.3125 52.6831 107.064 40.9428 107.064 26.4607C107.064 11.9784 95.3125 0.238281 80.8163 0.238281C66.3198 0.238281 54.5684 11.9784 54.5684 26.4607C54.5684 40.9428 66.3198 52.6831 80.8163 52.6831Z" fill="#00AAFF"/></g><defs><clipPath id="avitoclip"><rect width="108" height="100" fill="#fff"/></clipPath></defs></svg>' },
+  { name: 'Сайт', svg: '<svg width="20" height="20" viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg"><circle cx="627" cy="627" r="627" fill="url(#logo-grad)"/><g transform="translate(0.000000,1254.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none"><path d="M5955 9563 c-155 -14 -404 -74 -562 -134 -601 -228 -1098 -705 -1348 -1293 -183 -433 -226 -888 -123 -1336 66 -292 247 -669 426 -889 80 -99 200 -146 347 -139 81 4 103 10 181 46 49 22 289 128 534 235 753 330 2111 926 2775 1219 99 44 223 98 275 120 52 22 119 56 149 76 69 46 135 136 161 219 19 63 20 92 20 872 0 789 -1 807 -21 851 -25 55 -71 105 -124 133 -40 22 -40 22 -1345 23 -718 0 -1323 -1 -1345 -3z"/><path d="M7790 6463 c-96 -15 -78 -7 -1560 -680 -272 -124 -781 -356 -1130 -515 -349 -159 -705 -321 -790 -360 -321 -146 -334 -153 -388 -212 -29 -32 -61 -81 -74 -114 -23 -57 -23 -57 -23 -852 0 -795 0 -795 22 -835 28 -52 68 -89 123 -114 45 -20 59 -21 1335 -21 1220 0 1297 1 1420 19 610 90 1134 428 1499 969 169 249 290 556 351 887 26 136 31 479 11 626 -52 372 -186 705 -401 999 -68 92 -101 123 -174 159 -39 20 -161 52 -186 49 -5 0 -21 -2 -35 -5z"/></g></svg>' },
 ];
 
 /* ---------- demo-chat scenarios (original content) ---------- */
@@ -770,7 +739,7 @@ function buildChat(el) {
 document.querySelectorAll('[data-mark]').forEach(m => m.innerHTML = SVG.mark);
 document.querySelectorAll('[data-check]').forEach(c => c.innerHTML = SVG.check);
 document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = SVG.arrow);
-const CALC_ICO = { money: SVG.money, clients: SVG.clients, time: SVG.time };
+const CALC_ICO = { freed: SVG.freed, clients: SVG.clients, time: SVG.time };
 document.querySelectorAll('[data-ico]').forEach(s => { s.innerHTML = CALC_ICO[s.dataset.ico] || ''; });
 const b = document.querySelector('[data-channels-inline]');
 if (b) b.innerHTML = CHANNELS.map(c => `<span class="lp-sub__ch" title="${c.name}">${c.svg}</span>`).join('');
