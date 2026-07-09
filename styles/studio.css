@@ -1225,6 +1225,11 @@ body {
 }
 .lp-finalcta__btn:hover { background: var(--accent-hover); }
 .lp-finalcta__btn:active { transform: translateY(1px); }
+.lp-finalcta__status {
+  position: relative; z-index: 1; margin: 16px 0 0; min-height: 20px;
+  font-family: var(--font-body); font-size: 14px; color: var(--fg); opacity: 0.75;
+}
+.lp-finalcta__status[data-state="error"] { color: #b3261e; opacity: 1; }
 @media (max-width: 600px) {
   .lp-finalcta { padding: 56px 20px; border-radius: 24px; }
   .lp-finalcta__form { flex-direction: column; }

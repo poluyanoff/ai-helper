@@ -1,0 +1,9 @@
+name = "slot-lead-relay"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Домен(ы), которым разрешено слать запросы в воркер.
+# Пример: "https://username.github.io"
+# Несколько через запятую: "https://username.github.io,http://localhost:3000"
+[vars]
+ALLOWED_ORIGIN = "*"
