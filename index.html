@@ -551,10 +551,11 @@
 
     <div class="lp-finalcta" id="finalcta" data-reveal>
       <h2 class="lp-finalcta__title">Не теряйте выручку<br>в&nbsp;эпоху ИИ</h2>
-      <form class="lp-finalcta__form" onsubmit="return false">
-        <input type="text" class="lp-finalcta__input" placeholder="Телефон, Telegram, почта" aria-label="Контакт">
+      <form class="lp-finalcta__form" id="finalcta-form">
+        <input type="text" class="lp-finalcta__input" name="contact" placeholder="Телефон, Telegram, почта" aria-label="Контакт" required>
         <button type="submit" class="lp-finalcta__btn">Получить доступ</button>
       </form>
+      <p class="lp-finalcta__status" id="finalcta-status" role="status" aria-live="polite"></p>
     </div>
   </div>
 </section>
@@ -584,7 +585,7 @@
     <div class="lp-footer__bottom">
       <span>© 2026 Слот. Все права защищены.</span>
       <div class="lp-footer__legal">
-        <a href="#">Политика обработки персональных данных</a>
+        <a href="https://disk.yandex.ru/i/KuH7SfsXFs-mnA" target="_blank" rel="noopener">Политика обработки персональных данных</a>
       </div>
     </div>
   </div>
@@ -1026,6 +1027,46 @@ if (fMedia) fMedia.innerHTML = FEATURE_ORDER.map((si, i) =>
   }, { passive: false });
   window.addEventListener('scroll', function () { if (!active) target = window.scrollY; }, { passive: true });
   window.addEventListener('resize', function () { target = clamp(target); }, { passive: true });
+})();
+
+/* ---------- отправка формы в Telegram ---------- */
+(function () {
+  const LEAD_ENDPOINT = 'https://slot-lead-relay.poluyanoff-kos.workers.dev';
+
+  const form = document.getElementById('finalcta-form');
+  const status = document.getElementById('finalcta-status');
+  if (!form || !status) return;
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const input = form.querySelector('[name="contact"]');
+    const contact = (input.value || '').trim();
+    if (!contact) return;
+
+    const btn = form.querySelector('button[type="submit"]');
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Отправляем…';
+    status.removeAttribute('data-state');
+    status.textContent = '';
+
+    try {
+      const res = await fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact }),
+      });
+      if (!res.ok) throw new Error('bad status');
+      status.textContent = 'Заявка отправлена, мы свяжемся с вами в ближайшее время.';
+      form.reset();
+    } catch (err) {
+      status.setAttribute('data-state', 'error');
+      status.textContent = 'Не получилось отправить. Попробуйте ещё раз или напишите нам напрямую.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  });
 })();
 </script>
 </body>
